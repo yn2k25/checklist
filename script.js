@@ -1,4 +1,4 @@
-// FKR Workflow v2 - skeleton navigation logic
+// FKR Adoption Workflow v2 - navigation logic
 
 const linearSteps = [
   "step1","step2","step3","step4","step5",
@@ -9,6 +9,7 @@ const linearSteps = [
   "step26","step27"
 ];
 
+// separate branch screen (Wrap up – no adoption)
 const branchSteps = ["wrap_no_adopt"];
 
 let currentStepId = "step1";
@@ -18,31 +19,30 @@ let interactionType = null; // "appointment" or "walkin"
 function showStep(stepId, pushHistory = true) {
   const all = document.querySelectorAll(".step");
   all.forEach(el => el.classList.remove("active"));
+
   const target = document.querySelector(`.step[data-step-id="${stepId}"]`);
   if (!target) return;
+
   if (pushHistory && currentStepId && currentStepId !== stepId) {
     historyStack.push(currentStepId);
   }
+
   currentStepId = stepId;
   target.classList.add("active");
   updateProgress();
-}
-
-function goBack() {
-  if (!historyStack.length) return;
-  const prev = historyStack.pop();
-  showStep(prev, false);
 }
 
 function updateProgress() {
   const label = document.getElementById("progress-label");
   const bar = document.getElementById("progress-bar");
   const idx = linearSteps.indexOf(currentStepId);
+
   if (idx === -1) {
     label.textContent = "Branch";
     bar.style.width = "0%";
     return;
   }
+
   const stepNum = idx + 1;
   const total = linearSteps.length;
   label.textContent = `Step ${stepNum}`;
@@ -51,20 +51,23 @@ function updateProgress() {
 
 function populateJumpMenu() {
   const select = document.getElementById("step-jump");
+  if (!select) return;
+
   select.innerHTML = "";
   linearSteps.forEach((id, i) => {
     const el = document.querySelector(`.step[data-step-id="${id}"]`);
     if (!el) return;
-    const title = el.querySelector(".step-title")?.textContent || `Step ${i+1}`;
-    const opt = document.createElement("option");
-    opt.value = id;
-    opt.textContent = `${i+1}. ${title.replace(/^Step \d+:\s*/, "")}`;
-    select.appendChild(opt);
+    const title = el.querySelector(".step-title")?.textContent || `Step ${i + 1}`;
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = `${i + 1}. ${title.replace(/^Step \\d+:\\s*/, "")}`;
+    select.appendChild(option);
   });
 }
 
 function handleButtonClick(stepId, btnType) {
   const idx = linearSteps.indexOf(stepId);
+
   switch (stepId) {
     case "step1":
       if (btnType === "appointment") {
@@ -119,16 +122,15 @@ function handleButtonClick(stepId, btnType) {
       }
       break;
 
-    case "step26": // Stop and notify staff
+    case "step26":
       if (btnType === "stop_staff") {
-        // After notifying staff, restart
         showStep("step1");
       } else if (btnType === "back") {
         showStep("step4");
       }
       break;
 
-    case "step27": // Checklist complete
+    case "step27":
       if (btnType === "restart") {
         historyStack = [];
         interactionType = null;
@@ -137,7 +139,6 @@ function handleButtonClick(stepId, btnType) {
       break;
 
     default:
-      // Generic steps: next/back
       if (btnType === "next") {
         if (idx !== -1 && idx < linearSteps.length - 1) {
           showStep(linearSteps[idx + 1]);
@@ -167,41 +168,22 @@ function wireButtons() {
 
 function wireChrome() {
   const jump = document.getElementById("step-jump");
-  jump.addEventListener("change", e => {
-    const val = e.target.value;
-    if (!val) return;
-    showStep(val);
-  });
+  if (jump) {
+    jump.addEventListener("change", e => {
+      const val = e.target.value;
+      if (!val) return;
+      showStep(val);
+    });
+  }
 
   const topRestart = document.getElementById("start-over-top");
-  topRestart.addEventListener("click", () => {
-    historyStack = [];
-    interactionType = null;
-    showStep("step1", false);
-  });
-
-  const helpOverlay = document.getElementById("help-overlay");
-  const helpClose = document.getElementById("help-close-btn");
-  helpClose.addEventListener("click", hideHelp);
-  helpOverlay.addEventListener("click", e => {
-    if (e.target === helpOverlay) hideHelp();
-  });
-}
-
-function showHelp(htmlContent) {
-  const overlay = document.getElementById("help-overlay");
-  const container = document.getElementById("help-content");
-  container.innerHTML = htmlContent;
-  overlay.classList.add("active");
-  overlay.setAttribute("aria-hidden", "false");
-}
-
-function hideHelp() {
-  const overlay = document.getElementById("help-overlay");
-  overlay.classList.remove("active");
-  overlay.setAttribute("aria-hidden", "true");
-  const container = document.getElementById("help-content");
-  container.innerHTML = "";
+  if (topRestart) {
+    topRestart.addEventListener("click", () => {
+      historyStack = [];
+      interactionType = null;
+      showStep("step1", false);
+    });
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
