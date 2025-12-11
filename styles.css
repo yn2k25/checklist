@@ -296,7 +296,10 @@ button:active {
   font-weight: 600;
   color: #111827;
 }
-
+/* Hide meta text like "Buttons on this screen" and "Help overlay text" */
+.step-meta-hidden {
+  display: none;
+}
 /* Footer */
 
 footer {
