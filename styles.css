@@ -1,10 +1,11 @@
-/* FKR Workflow v2 - polished skeleton styles */
+/* FKR Adoption Workflow v2 - app styles */
 
 * {
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -17,6 +18,8 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+
+/* Header */
 
 header {
   background: #b91c1c;
@@ -38,6 +41,8 @@ header p {
   opacity: 0.9;
 }
 
+/* Main card */
+
 main {
   flex: 1;
   padding: 20px 12px 28px;
@@ -54,6 +59,8 @@ main {
   padding: 20px 18px 24px;
   box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
 }
+
+/* Top row */
 
 .top-row {
   display: flex;
@@ -80,6 +87,8 @@ main {
   border: 1px solid #d1d5db;
   font-size: 0.9rem;
 }
+
+/* Progress */
 
 .progress {
   display: flex;
@@ -111,6 +120,7 @@ main {
 }
 
 /* Steps */
+
 .step {
   display: none;
 }
@@ -123,6 +133,8 @@ main {
   border-left: 4px solid #b91c1c;
   padding-left: 12px;
 }
+
+/* Section pill */
 
 .pill {
   display: inline-flex;
@@ -146,6 +158,8 @@ main {
   background: #b91c1c;
 }
 
+/* Titles and text */
+
 .step-title {
   font-size: 1.2rem;
   font-weight: 700;
@@ -159,13 +173,21 @@ main {
   line-height: 1.5;
 }
 
-.step-body .placeholder {
-  margin: 0 0 4px;
-  color: #6b7280;
-  font-style: italic;
+.step-body p {
+  margin: 0 0 6px;
+}
+
+.step-body ul {
+  margin: 0 0 8px 1.25rem;
+  padding-left: 0;
+}
+
+.step-body li {
+  margin-bottom: 4px;
 }
 
 /* Buttons */
+
 .btn-row {
   display: flex;
   flex-direction: column;
@@ -206,6 +228,7 @@ button:active {
 }
 
 /* Help overlay */
+
 .help-overlay {
   position: fixed;
   inset: 0;
@@ -249,6 +272,33 @@ button:active {
   color: #111827;
 }
 
+/* Tables inside steps */
+
+.step-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 4px;
+  font-size: 0.92rem;
+}
+
+.step-table td {
+  border: 1px solid #d1d5db;
+  padding: 6px 8px;
+  vertical-align: top;
+}
+
+.step-table tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.step-table td:first-child {
+  width: 28%;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Footer */
+
 footer {
   text-align: center;
   padding: 10px 8px 16px;
@@ -256,10 +306,17 @@ footer {
   color: #6b7280;
 }
 
+/* Mobile tweaks */
+
 @media (max-width: 720px) {
   .card {
     border-radius: 0;
     padding: 16px 12px 20px;
     box-shadow: none;
+  }
+
+  .top-row {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
