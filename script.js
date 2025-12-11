@@ -9,7 +9,7 @@ const linearSteps = [
   "step26","step27"
 ];
 
-// separate branch screen (Wrap up – no adoption)
+// separate branch screen (Wrap up - no adoption)
 const branchSteps = ["wrap_no_adopt"];
 
 let currentStepId = "step1";
@@ -60,7 +60,7 @@ function populateJumpMenu() {
     const title = el.querySelector(".step-title")?.textContent || `Step ${i + 1}`;
     const option = document.createElement("option");
     option.value = id;
-    option.textContent = `${i + 1}. ${title.replace(/^Step \\d+:\\s*/, "")}`;
+    option.textContent = `${i + 1}. ${title.replace(/^Step \d+:\s*/, "")}`;
     select.appendChild(option);
   });
 }
@@ -186,9 +186,28 @@ function wireChrome() {
   }
 }
 
+// Hide meta spec text that should not appear on the screen
+function hideMetaSections() {
+  document.querySelectorAll(".step-body").forEach(body => {
+    let hideFromHere = false;
+    Array.from(body.children).forEach(el => {
+      if (hideFromHere) {
+        el.classList.add("step-meta-hidden");
+        return;
+      }
+      const text = (el.textContent || "").trim();
+      if (text.startsWith("Buttons on this screen:")) {
+        hideFromHere = true;
+        el.classList.add("step-meta-hidden");
+      }
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   populateJumpMenu();
   wireButtons();
   wireChrome();
+  hideMetaSections();
   showStep("step1", false);
 });
