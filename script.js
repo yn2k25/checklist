@@ -1,269 +1,273 @@
-/* Auto-generated from your workflow manual HTML. */
+/* global FKR_DATA */
+(function(){
+  const data = window.FKR_DATA;
+  if(!data || !data.steps) {
+    console.error("FKR_DATA missing");
+    return;
+  }
 
-const STEPS = [{"id": "step1", "label": "1", "stepNumber": "1", "title": "What type of interaction is this?", "section": "Start", "bodyHtml": "<p>Choose one to begin.</p>", "buttons": [{"label": "Scheduled appointment", "style": "neutral", "action": {"type": "goto", "target": "2"}}, {"label": "Walk in", "style": "neutral", "action": {"type": "goto", "target": "3"}}], "helps": {}}, {"id": "step2", "label": "2", "stepNumber": "2", "title": "Appointment prep", "section": "Before meet and greet", "bodyHtml": "<p>Checklist:</p><p>·       <span dir=\"LTR\"></span>Scheduled: Check\nPP for Consultation Form</p><p>·      \n<span dir=\"LTR\"></span>Find the person in PP</p><p>·      \n<span dir=\"LTR\"></span>Click Memos/Files</p><p>·      \n<span dir=\"LTR\"></span>Scroll to Memos section</p><p>·      \n<span dir=\"LTR\"></span>Find “Consultation Form” </p><p>·       <span dir=\"LTR\"></span>Review Consultation Form (CF)</p><p>·       <span dir=\"LTR\"></span>Check PP for Do Not Adopt (DNA)</p><p>·      \n<span dir=\"LTR\"></span>If there is an alert for DNA, one should\npop-up when you open the Person record.</p><p>·      \n<span dir=\"LTR\"></span>Also check memos for a DNA note.</p><p>Confirm when these are done.</p>", "buttons": [{"label": "Yes - all done", "style": "primary", "action": {"type": "goto", "target": "4"}}, {"label": "Where is the CF in PP?", "style": "outline", "action": {"type": "help", "key": "Where is the CF in PP?"}}, {"label": "Where to check Do Not Adopt (DNA)?", "style": "outline", "action": {"type": "help", "key": "Where to check Do Not Adopt (DNA)?"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Where is the form in PP?": {"title": "Where is the form in PP?", "file": "1-CF-in-PP.png", "description": "How to check CF in PP", "text": ""}, "Where is DNA in PP?": {"title": "Where is DNA in PP?", "file": "2-DNA-in-PP.png", "description": "How to check DNA status", "text": ""}}}, {"id": "step3", "label": "3", "stepNumber": "3", "title": "Walk in prep", "section": "Before meet and greet", "bodyHtml": "<p>Complete these first.</p><p>Checklist:</p><p>·       <span dir=\"LTR\"></span>Walk-in: Have\nthe visitor complete the\nConsultation Form</p><p>·       <span dir=\"LTR\"></span>Make sure all required questions are answered.</p><p>·       <span dir=\"LTR\"></span>PetPoint checked for Do Not Adopt (DNA)</p><p>·       <span dir=\"LTR\"></span>If person does not exist in PP,  you\ncan create the record after meet &amp; greet.</p>", "buttons": [{"label": "Yes - both done", "style": "primary", "action": {"type": "goto", "target": "4"}}, {"label": "Where is DNA in PP?", "style": "outline", "action": {"type": "help", "key": "Where is DNA in PP?"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Where is DNA in PP?": {"title": "Where is DNA in PP?", "file": "2-DNA-in-PP.png", "description": "How to check DNA status", "text": ""}}}, {"id": "step4", "label": "4", "stepNumber": "4", "title": "Any concerning behavior?", "section": "Meet and greet", "bodyHtml": "<p>Watch how the adopter interacts with the cat. If anything\nfeels off, pause and talk to staff.</p>", "buttons": [{"label": "No - everything looks appropriate", "style": "primary", "action": {"type": "goto", "target": "5"}}, {"label": "Yes - concern exists", "style": "secondary", "action": {"type": "goto", "target": "26B"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step5", "label": "5", "stepNumber": "5", "title": "Did they choose a cat today?", "section": "Decision", "bodyHtml": "<p>If they clearly chose a specific cat today, pick Yes and\nmove into the adoption steps.</p><p>If they are still thinking, or no cat is going home today,\npick No.</p>", "buttons": [{"label": "Yes - proceeding with adoption", "style": "primary", "action": {"type": "goto", "target": "6"}}, {"label": "No - no adoption today", "style": "secondary", "action": {"type": "goto", "target": "26A"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step6", "label": "6", "stepNumber": "6", "title": "Does the adopter already have a Person record?", "section": "Adoption", "bodyHtml": "<p>From the main search, type their name and confirm if there\nis already a record for this person.</p><p>If the Person does NOT exist in PP:</p><p>·      \n<span dir=\"LTR\"></span>Create the Person record:</p><p>·      \n<span dir=\"LTR\"></span>Use the green plus icon to create a new\nPerson.</p><p>·      \n<span dir=\"LTR\"></span>Fill in name, address, phone, and email so\nyou can contact them later.</p>", "buttons": [{"label": "Yes - Person already exists", "style": "primary", "action": {"type": "goto", "target": "7"}}, {"label": "How to create a Person record", "style": "outline", "action": {"type": "help", "key": "How to create a Person record"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"How to create a Person record": {"title": "How to create a Person record", "file": "3-New-Person-in-PP.png", "description": "How to create a new Person record", "text": ""}}}, {"id": "step7", "label": "7", "stepNumber": "7", "title": "If the adopter is in PP, is contact info verified?", "section": "Adoption", "bodyHtml": "<p>To edit : click the green pencil icon under the person’s\nname next to “Details”<br/>\n<br/>\nButtons on this screen:</p><p>·       <span dir=\"LTR\"></span>Yes – continue [primary (green)]</p><p>·       <span dir=\"LTR\"></span>How to edit the contact info [outline utility]</p><p>·       <span dir=\"LTR\"></span>Back [outline utility]</p><p>Help overlay text (How to edit the contact info):<br/>\n<b>Show 4-Edit-Contact.png</b><br/>\n<i>Description: </i>How to edit contact info<br/>\n<br/>\n</p>", "buttons": [{"label": "Yes – continue", "style": "primary", "action": {"type": "goto", "target": "8"}}, {"label": "How to edit the contact info", "style": "outline", "action": {"type": "help", "key": "How to edit the contact info"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"How to edit the contact info": {"title": "How to edit the contact info", "file": "4-Edit-Contact.png", "description": "How to edit contact info", "text": ""}}}, {"id": "step8", "label": "8", "stepNumber": "8", "title": "Has Outcome to Adoption been started?", "section": "Adoption", "bodyHtml": "<p>The <b>Person</b> record should show an active Adoption\noutcome.</p><p>·      \n<span dir=\"LTR\"></span>Open the Person record for the adopter.</p><p>·      \n<span dir=\"LTR\"></span>Use the green plus menu to add a new\nOutcome.<br/>\n<br/>\n</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type:</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Adoption</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Kittyville</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Date </p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Today’s\n  date</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Status</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Completed</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Asilomar\n  Status</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Healthy\n  (Unless stated otherwise on cat)</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Jurisdiction</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Change to Person’s jurisdiction</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Person</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Verify this matches</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Animals</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Search and find the kitty</b></p>\n</td>\n</tr>\n</table><p> </p><p><b><u>🐈🐈\nFor multiple cats, you need to repeat the search and find second kitty.</u></b></p><p>·      \n<span dir=\"LTR\"></span>Click on the blue name for each cat, which\nwill open the cat’s record in a new tab.</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "9"}}, {"label": "How to start Adoption Outcome", "style": "outline", "action": {"type": "help", "key": "How to start Adoption Outcome"}}, {"label": "How to fill Outcome form", "style": "outline", "action": {"type": "help", "key": "How to fill Outcome form"}}, {"label": "🐈🐈 How to fill Outcome for Multi-cat", "style": "outline", "action": {"type": "help", "key": "🐈🐈 How to fill Outcome for Multi-cat"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"How to start Adoption Outcome": {"title": "How to start Adoption Outcome", "file": "5-create-new-outcome-on-person.png", "description": "How to start Adoption Outcome", "text": ""}, "How to fill Outcome form": {"title": "How to fill Outcome form", "file": "6-outcome-form-filled.png", "description": "How to fill Outcome form", "text": ""}, "🐈🐈 How to fill Outcome for Multi-cat": {"title": "🐈🐈 How to fill Outcome for Multi-cat", "file": "7-multiple-cat-outcome-on-person.png", "description": "How to fill Outcome for Multi-cat", "text": ""}}}, {"id": "step9", "label": "9", "stepNumber": "9", "title": "Have vouchers been created for each cat?", "section": "Adoption", "bodyHtml": "<p><b><u>Each</u></b> cat should have the correct voucher\ncreated.</p><p>·      \n<span dir=\"LTR\"></span>Go to the Cat record</p><p>·      \n<span dir=\"LTR\"></span>Click Vouchers/Waivers tab</p><p>·      \n<span dir=\"LTR\"></span>Click green + icon</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type:</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Care</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>EDAH 30-day Exam Voucher</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Issued </p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Today’s\n  date</b></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Expiry</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>[\n  automatically calculated]</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Issued by</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>Fearless Kitty, Rescue</b></p>\n</td>\n</tr>\n</table><p>·      \n<span dir=\"LTR\"></span>Click Save.</p><p>·      \n<span dir=\"LTR\"></span>After saving vouchers on each cat, return to\nPerson tab</p><p>·      \n<span dir=\"LTR\"></span>Click Save on the Outcome form.</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "10"}}, {"label": "Where to create voucher?", "style": "outline", "action": {"type": "help", "key": "Where to create voucher?"}}, {"label": "How to fill Voucher form?", "style": "outline", "action": {"type": "help", "key": "How to fill Voucher form?"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Where to create voucher?": {"title": "Where to create voucher?", "file": "8-Create-Voucher.png", "description": "Where to create voucher", "text": ""}, "How to fill Voucher form?": {"title": "How to fill Voucher form?", "file": "9-voucher-on-cat.png", "description": "Cat voucher example", "text": ""}}}, {"id": "step10", "label": "10", "stepNumber": "10", "title": "Is microchip consent and Petco choice completed?", "section": "Adoption", "bodyHtml": "<p>·      \n<span dir=\"LTR\"></span>Inform adopter of the microchip</p><p>·      \n<span dir=\"LTR\"></span>Make sure the adopter understands – “Yes” is\nrequired.</p><p>·      \n<span dir=\"LTR\"></span>Petco Vital Care Core Program is optional.</p><p>·      \n<span dir=\"LTR\"></span>Click \"Save\" at the bottom of the\npage. This completes and creates the Outcome.</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "11"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step11", "label": "11", "stepNumber": "11", "title": "Have folder contents been reviewed and ADA signed?", "section": "Adoption", "bodyHtml": "<p>·      \n<span dir=\"LTR\"></span>Review contents of red folder:</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"width:6.15in;margin-left:.5in;border-collapse:collapse;border:none\" width=\"590\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption\n  Disclosure(s):</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Review Kitten\n  and/or any Medical ADA's with adopter and have them sign and date. If not a\n  kitten, pull ADA and refile it. Ask adopter if they want a copy of ADA(s).</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Spay/Neuter\n  date</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>If more than\n  2 weeks since surgery, pull the spay/neuter info and</p>\n<p>return to\n  hanging file.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Vaccination\n  status</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>If 2nd\n  vaccine due in future, give adopter the FKR Medical</p>\n<p>business\n  card; ask them to send email to address on card</p>\n<p>to request\n  appointment date noted on form.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Advice\n  Document</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Point out any\n  pertinent areas based on situation</p>\n<p>o Introducing\n  new kitty to other cats, dogs, children,</p>\n<p>o List of\n  items to purchase if not already owned.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Boutique\n  Discount</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>$5 off a\n  minimum $10 total- valid for 30 days</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Petco\n  document</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>20% off\n  ENTIRE purchase. Note Expiration Date</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Continuing\n  Care:</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>This is for\n  any other non-FKR kitties that the adopter has. Pull from folder if adopter\n  has no non-FKR kitties.</p>\n</td>\n</tr>\n</table><p> </p><p>·      \n<span dir=\"LTR\"></span>Add copy of ADA to folder, if requested.\nKeep originals. </p><p>·      \n<span dir=\"LTR\"></span>Add kennel card to folder</p><p>·      \n<span dir=\"LTR\"></span>Give folder and contents to adopter</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "12"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step12", "label": "12", "stepNumber": "12", "title": "Has the contract been signed and emailed?", "section": "Adoption", "bodyHtml": "<p>1.     <span dir=\"LTR\"></span>Have the adopter read the laminated contract. Find out if there\nare any questions before proceeding.</p><p>2.     <span dir=\"LTR\"></span>Go to the Person page. </p><p>3.     <span dir=\"LTR\"></span>On the Records tab, scroll to the Outcome record created <b><u>today</u></b>.\n(Previous FKR adopters may have a previous outcomes)</p><p>4.     <span dir=\"LTR\"></span>On the right side, click the green Printer icon</p><p>5.     <span dir=\"LTR\"></span>Select <b><u>Contract</u></b>  OR if  🐈🐈 select <b><u>Multi-Animal\nContract</u></b> </p><p>6.     <span dir=\"LTR\"></span>Verify correct animal(s) listed on Contract page</p><p>7.     <span dir=\"LTR\"></span>Scroll to the bottom of the page and click the green eSignature\nbox.</p><p>8.     <span dir=\"LTR\"></span>Have adopter sign via the signature pad. Click Next.</p><p>9.     <span dir=\"LTR\"></span>Adoption counselor (you!) sign for the Organization. Click\nFinish. </p><p>10.  <span dir=\"LTR\"></span>Scroll\ndown on the new page displaying the contract. CIick \"Email\" button.</p><p>11.  <span dir=\"LTR\"></span>Review\nwhat's being sent to the adopter with the adopter:<br/>\n• Medical History Report</p><p>• Your Adoption Contract</p><p>• 24 PetWatch Microchip Registration\nInformation</p><p>• Voucher</p><p>12.  <span dir=\"LTR\"></span>Click\nsend, ensure confirmation \"E-mail Sent\" is there before closing the\npage.</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "13"}}, {"label": "Where to create contract?", "style": "outline", "action": {"type": "help", "key": "Where to create contract?"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Where to create contract?": {"title": "Where to create contract?", "file": "10-create-contract-on-person-outcome.png", "description": "Adoption Contract creation example", "text": ""}}}, {"id": "step13", "label": "13", "stepNumber": "13", "title": "Is the payment slip (paper) completed and payment processed?", "section": "Adoption", "bodyHtml": "<p>Payment should be collected and recorded correctly:</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Date, Kitty\n  Name and Adopter Name</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>As\n  appropriate</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption Fee</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Enter amount of adoption fee and note any\n  variants to fee (Waived / reduced / name your fee event)</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Boutique\n  Purchase</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Itemize items\n  purchased on back of slip, mark discounts if applicable. List total on front\n  of slip. OR:<br/>\n  Have adopter take all boutique purchases to front desk.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Donations</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>As\n  appropriate</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Payment</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><b>X</b> line\n  for payment type if cash or check</p>\n<p>·      \n  <span dir=\"LTR\"></span>Cash or check: staple to back of payment\n  slip</p>\n<p>·      \n  <span dir=\"LTR\"></span>Debit/Credit card: type of card &amp; last\n  4 numbers of card as detected in Square confirmation. (Note Apple pay numbers\n  may not match physical card #, so use the number recorded by Square).</p>\n<p> </p>\n</td>\n</tr>\n</table><p>·      \n<span dir=\"LTR\"></span> </p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "14"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step14", "label": "14", "stepNumber": "14", "title": "Final checks before leaving", "section": "Sending kitty home", "bodyHtml": "<p>Checklist:</p><p>·       <span dir=\"LTR\"></span>Microchip verified before carrier</p><p>·       <span dir=\"LTR\"></span>Kitten weight recorded</p><p>·       <span dir=\"LTR\"></span>Take photo of kitty with family, if signed release</p><p>·       <span dir=\"LTR\"></span>Age appropriate adoption bag given with:</p><p>·      \n<span dir=\"LTR\"></span> dry food</p><p>·      \n<span dir=\"LTR\"></span>2 cans wet food</p><p>·      \n<span dir=\"LTR\"></span>bag of treats</p><p>·      \n<span dir=\"LTR\"></span>blanket</p><p>·      \n<span dir=\"LTR\"></span>2 toys. </p><p>·       <span dir=\"LTR\"></span>Litter sample if available</p><p>·       <span dir=\"LTR\"></span>Red folder</p>", "buttons": [{"label": "Adopter has left", "style": "primary", "action": {"type": "goto", "target": "15"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step15", "label": "15", "stepNumber": "15", "title": "Has the adopter memo been completed?", "section": "After adopter leaves", "bodyHtml": "<p>Add an Adoption Outcome memo on the person record:</p><p>·      \n<span dir=\"LTR\"></span>On the Person record, go to Memos/Files Tab</p><p>·      \n<span dir=\"LTR\"></span>Click the green + next to Memos.</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption\n  Outcome</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adopted</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Review\n  date</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><i>Leave\n  blank</i></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Comments</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>This\n  should include key facts about the adopter and appointment and items you\n  discussed you feel would be helpful if adopter calls with questions. </p>\n<p>•\n  None of this information is being published and will remain private in\n  PetPoint.</p>\n</td>\n</tr>\n</table><p> </p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "16"}}, {"label": "How to add Adoption Outcome Memo?", "style": "outline", "action": {"type": "help", "key": "How to add Adoption Outcome Memo?"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"How to add Adoption Outcome Memo?": {"title": "How to add Adoption Outcome Memo?", "file": "11-Adopter-memo.png", "description": "Adoption Outcome Memo example", "text": ""}}}, {"id": "step16", "label": "16", "stepNumber": "16", "title": "Has the cat outcome memo been completed?", "section": "After adopter leaves", "bodyHtml": "<p>Add a short outcome memo on Each Cat record.</p><p>·      \n<span dir=\"LTR\"></span>Click Memos/Files.</p><p>·      \n<span dir=\"LTR\"></span>Click the green + sign next to Memos.</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Outcome</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adopt</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Review\n  date</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><i>Leave\n  blank</i></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Comments</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>You can add a\n  simple sentence saying kitty was adopted and if they will join other pets in\n  their new home. No other personal information about adopter.</p>\n</td>\n</tr>\n</table><p><br/>\nRepeat for 🐈🐈.\n</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "17"}}, {"label": "How to add Adoption Memo on the Cat", "style": "outline", "action": {"type": "help", "key": "How to add Adoption Memo on the Cat"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"How to add Adoption Memo on the Cat": {"title": "How to add Adoption Memo on the Cat", "file": "12-memo-on-pet.png", "description": "Outcome memo on Cat", "text": ""}}}, {"id": "step17", "label": "17", "stepNumber": "17", "title": "Has the association been updated?", "section": "After adopter leaves", "bodyHtml": "<p>Update the person\nassociation to Adopter </p><p> </p><p>·      \n<span dir=\"LTR\"></span>On the Person page, go to Associations tab</p><p>·      \n<span dir=\"LTR\"></span>If \"Adopter\" is already listed\n(previously adopted an FKR kitty), click “continue” below to proceed to next\nstep</p><p>·      \n<span dir=\"LTR\"></span>If no “Adopter” listed, then:</p><p>o  \n<span dir=\"LTR\"></span>Note the Subtype on the “Potential Adopter”\nrow.</p><p>o  \n<span dir=\"LTR\"></span>Click the green +</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"width:5.65in;margin-left:1.0in;border-collapse:collapse;border:none\" width=\"542\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adopter</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>·      \n  <span dir=\"LTR\"></span>Should match the one from “Potential\n  Adopter”</p>\n<p>·      \n  <span dir=\"LTR\"></span>If adopter was a walk in, select the same\n  subtype as noted on page 2 of the Consultation Form</p>\n</td>\n</tr>\n</table><p> </p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "18"}}, {"label": "Show the Association form", "style": "outline", "action": {"type": "help", "key": "Show the Association form"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Show the Association form": {"title": "Show the Association form", "file": "13-Association.png", "description": "Association form", "text": ""}}}, {"id": "step18", "label": "18", "stepNumber": "18", "title": "Have ADA forms been uploaded to the cat record?", "section": "After adopter leaves – Document Uploads", "bodyHtml": "<p>Scan Document:</p><p>·      \n<span dir=\"LTR\"></span>Place Adoption Disclosure Document (Kitten\nor Medical) in scanner and push button</p><p>·      \n<span dir=\"LTR\"></span>Save to Downloads folder with filename in\nformat: \"<b><u>Adoption Disclosure\nAgreement - kitty name”</u></b></p><p>·      \n<span dir=\"LTR\"></span>If Medical ADA: <b><u>Medical ADA - kitty name</u></b></p><p>Create file in PP:</p><p>·      \n<span dir=\"LTR\"></span>On the Cat record, go to Memos/Files </p><p>·      \n<span dir=\"LTR\"></span>Click on green + sign next to Files</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Name</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>\"Signed\n  Kitten ADA - kitty name\" and/or <br/>\n  \"Signed Medical ADA - kitty name\"</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption\n  Document</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption\n  Disclosure Agreement - ADA</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Expiration</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><i>Leave\n  blank</i></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Select Files</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Browse to\n  Downloads folder and select files. </p>\n</td>\n</tr>\n</table><p> </p><p>·      \n<span dir=\"LTR\"></span>Click Upload</p><p>·      \n<span dir=\"LTR\"></span>Tear up and throw away the signed ADA</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "19"}}, {"label": "Show ADA File Upload form", "style": "outline", "action": {"type": "help", "key": "Show ADA File Upload form"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Show ADA File Upload form": {"title": "Show ADA File Upload form", "file": "14-ADA-File_upload.png", "description": "ADA upload example", "text": ""}}}, {"id": "step19", "label": "19", "stepNumber": "19", "title": "Has the consultation form been uploaded?", "section": "After adopter leaves – Document Uploads", "bodyHtml": "<p>Scan Document:</p><p>·      \n<span dir=\"LTR\"></span>Place Consultation Form in scanner and push\nbutton</p><p>·      \n<span dir=\"LTR\"></span>Save to Downloads folder with filename in\nformat: \"<b><u>Consultation Form -Adopter's Name”</u></b></p><p>Create file in PP:</p><p>·      \n<span dir=\"LTR\"></span>On the Person record, go to Memos/Files </p><p>·      \n<span dir=\"LTR\"></span>Click on green + sign next to Files</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.5in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Name</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Consultation\n  Form</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Type</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption\n  Document</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Adoption\n  Consultation </p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Expiration</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p><i>Leave\n  blank</i></p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Select Files</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Browse to\n  Downloads folder and select files. </p>\n</td>\n</tr>\n</table><p> </p><p>·      \n<span dir=\"LTR\"></span>Click Upload</p><p>·      \n<span dir=\"LTR\"></span>Tear up and throw away the Consultation Form</p><p> </p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "20"}}, {"label": "Show CF File Upload form", "style": "outline", "action": {"type": "help", "key": "Show CF File Upload form"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Show CF File Upload form": {"title": "Show CF File Upload form", "file": "15-CF-form-upload.png", "description": "Consultation form upload example", "text": ""}}}, {"id": "step20", "label": "20", "stepNumber": "20", "title": "Has the receipt been entered in PetPoint?", "section": "After adopter leaves – Receipts", "bodyHtml": "<p>Create a Receipt in PP:</p><p>·      \n<span dir=\"LTR\"></span>ON the Person page, in top right corner,\nclick green +</p><p>·      \n<span dir=\"LTR\"></span>Choose Receipt<br/>\n<br/>\n</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:1.0in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Cash Drawer</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Choose how\n  the adopter pays</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Reference</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>If card used,\n  add card type (Visa, MC, Discover, etc) and last 4 numbers of card from the\n  Payment Slip.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Animals</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>·      \n  <span dir=\"LTR\"></span>Enter the name of kitty adopted to search\n  and add.</p>\n<p>·      \n  <span dir=\"LTR\"></span>🐈🐈 \n  Repeat for multiple kitties </p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Person</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Make sure\n  adopter is listed</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Items</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>·      \n  <span dir=\"LTR\"></span>Choose the item based on Kitty’s age.</p>\n<p>·       <span dir=\"LTR\"></span>For single kitty, it will default kitty info.</p>\n<p>·       <span dir=\"LTR\"></span>For 🐈🐈\n  : </p>\n<p>o  \n  <span dir=\"LTR\"></span>Details will pop-up, select the Kitty from\n  the list.</p>\n<p>o  \n  <span dir=\"LTR\"></span>Add another item based on second kitty’s\n  age</p>\n<p>o  \n  <span dir=\"LTR\"></span>Details will pop-up, select second kitty\n  from list. </p>\n<p> </p>\n</td>\n</tr>\n</table><p> </p><p>·      \n<span dir=\"LTR\"></span>If any discounts, click the button below for\nsteps before continuing.</p><p>·      \n<span dir=\"LTR\"></span>Click Pay button</p><p>·      \n<span dir=\"LTR\"></span>In the next pop-up, for Type – ALWAYS choose\n<b><u>“Cash” </u></b></p><p>·      \n<span dir=\"LTR\"></span>Click Save</p><p> </p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "21"}}, {"label": "Where to create Receipt", "style": "outline", "action": {"type": "help", "key": "Where to create Receipt"}}, {"label": "How to complete Receipt form?", "style": "outline", "action": {"type": "help", "key": "How to complete Receipt form?"}}, {"label": "How to", "style": "outline", "action": {"type": "help", "key": "How to complete Receipt form?"}}, {"label": "🐈🐈 Multi-Cat Receipt form?", "style": "outline", "action": {"type": "help", "key": "🐈🐈 Multi-Cat Receipt form?"}}, {"label": "What if there is a discount?", "style": "outline", "action": {"type": "help", "key": "What if there is a discount?"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"Where to create Receipt": {"title": "Where to create Receipt", "file": "18-multi-cat-receipt-on-person.png", "description": "Multi cat receipt example", "text": ""}, "How to complete Receipt form?": {"title": "How to complete Receipt form?", "file": "17-receipt-form.png", "description": "Receipt form and payment panel", "text": ""}, "What if there is a discount?": {"title": "What if there is a discount?", "file": null, "description": null, "text": "If discounting the fee of the cat(s), do the following steps :\n·\nClick on the Green Pencil icon on the right\nline of the cat with the discounted fee.\n·\nAdd the discount - either % or $ amount\n·\nReview that the subtotal is correct\n·\nSelect the appropriate Discount Reason\no\nWhen using the ·other\" reason, add\ninformation regarding the situation and who approved the discount.\n·\nClick Save"}}}, {"id": "step21", "label": "21", "stepNumber": "21", "title": "Has the calendar been updated?", "section": "After adopter leaves - Calendar", "bodyHtml": "<p>Update the appointment with correct notes or outcome:<br/>\n<br/>\n</p><p>·      \n<span dir=\"LTR\"></span>Click the Calendar icon to open the Visual\nCalendar window.</p><p>·      \n<span dir=\"LTR\"></span>Double-click on the adoption appointment you\nare working on. An Appointment Overview box will pop up. </p><p>·      \n<span dir=\"LTR\"></span>Scroll down and click the blue \"Edit\nAppointment\" Box.</p><p>·      \n<span dir=\"LTR\"></span>Page will open behind the \"Adoption\nOverview\" screen. Be sure to go to that screen.</p><table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"MsoTableGrid\" style=\"margin-left:.25in;border-collapse:collapse;border:none\">\n<tr>\n<td style=\"border:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Subtype</p>\n</td>\n<td style=\"border:solid windowtext 1.0pt;border-left:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Leave the\n  selected \"Meet and Greet”</p>\n<p>there.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Status</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Select\n  \"Completed\".</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Status Reason</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Select\n  \"Adopted\" or \"Did Not</p>\n<p>Adopt\"\n  as appropriate.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Start\n  Date/Time</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Enter the\n  date and time the</p>\n<p>appointment\n  was scheduled to start.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>End Date/Time</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Enter the\n  date and time the appointment was scheduled to end (one hour after the\n  start).<br/>\n  If the appointment ended early and you are updating the calendar before the\n  scheduled end time, you may enter the current time.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Assigned To</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Select your\n  name under the drop-down menu or</p>\n<p>\"Fearless\n  Kitty Rescue\" if your name is not listed.</p>\n</td>\n</tr>\n<tr>\n<td style=\"border:solid windowtext 1.0pt;border-top:none;\n  padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Calendar\n  color</p>\n</td>\n<td style=\"border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;\n  border-right:solid windowtext 1.0pt;padding:0in 5.4pt 0in 5.4pt\" valign=\"top\">\n<p>Leave it to\n  whatever is selected (usually pink).</p>\n</td>\n</tr>\n</table><p> </p><p>·      \n<span dir=\"LTR\"></span>Click Submit Appointment</p><p> </p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "22"}}, {"label": "How to update Calendar", "style": "outline", "action": {"type": "help", "key": "How to update Calendar"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {"How to update Calendar": {"title": "How to update Calendar", "file": null, "description": null, "text": "19-edit-appointment.png"}}}, {"id": "step22", "label": "22", "stepNumber": "22", "title": "Has the photo been texted to Kim?", "section": "After adopter leaves", "bodyHtml": "<p>Send the approved adoption photo for social media or\nrecords.</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "23"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step23", "label": "23", "stepNumber": "23", "title": "Has the Outlook follow up email been sent?", "section": "After adopter leaves", "bodyHtml": "<p>Send the Outlook adoption email with cats adopted, PP done,\nwhether photo was sent, and counselor names.</p>", "buttons": [{"label": "Yes - continue", "style": "primary", "action": {"type": "goto", "target": "24"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step24", "label": "24", "stepNumber": "24", "title": "Have the payment & slips been filed?", "section": "After adopter leaves - Payments", "bodyHtml": "<p>·      \n<span dir=\"LTR\"></span>Place completed payment slip with card or\ncheck in Barbs folder </p><p>·      \n<span dir=\"LTR\"></span>If adopter paid with cash, place payment\nslip/cash in black lock box.</p>", "buttons": [], "helps": {}}, {"id": "step25", "label": "25", "stepNumber": "25", "title": "Have whiteboards been updated?", "section": "After adopter leaves - Boards", "bodyHtml": "<p>·      \n<span dir=\"LTR\"></span>Room White Board: Remove kitty's name or the\nphoto in frame.</p><p>·      \n<span dir=\"LTR\"></span>Large White Board by Medical: Remove kitty's\nname</p><p>·      \n<span dir=\"LTR\"></span>Adoption Board: Write next number, kitty's\nname, circled A, and date. </p><p>o  \n<span dir=\"LTR\"></span>If FTA- add in lower right section of\nAdoption Board.</p>", "buttons": [{"label": "Yes - all wrap up tasks done", "style": "primary", "action": {"type": "goto", "target": "27"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step26a", "label": "26A", "stepNumber": "26A", "title": "Wrap up - no adoption", "section": "No adoption", "bodyHtml": "<p>If no cat was adopted, make sure the notes and future follow\nup are clear.</p><p>Checklist:</p><p>·       <span dir=\"LTR\"></span>Add Future adopt - needs discussion memo if needed on the Person\npage</p><p>·       <span dir=\"LTR\"></span>Upload consultation form to Person record</p><p>·       <span dir=\"LTR\"></span>Update calendar with correct reason</p>", "buttons": [{"label": "All done", "style": "primary", "action": {"type": "goto", "target": "27"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step26b", "label": "26B", "stepNumber": "26B", "title": "Stop and notify staff", "section": "Pause", "bodyHtml": "<p>When you have a concern, step out of the room and talk to\nstaff before continuing.</p>", "buttons": [{"label": "Situation resolved - restart", "style": "primary", "action": {"type": "goto", "target": "27"}}, {"label": "Back", "style": "outline", "action": {"type": "back"}}], "helps": {}}, {"id": "step27", "label": "27", "stepNumber": "27", "title": "Checklist complete", "section": "Complete", "bodyHtml": "<p>You are done with this case. Tap below to start over.</p>", "buttons": [{"label": "Start again", "style": "primary", "action": {"type": "none"}}], "helps": {}}];
+  const order = data.order;
+  const steps = data.steps;
 
-const elStepHost = document.getElementById('stepHost');
-const elButtonRow = document.getElementById('buttonRow');
-const elJump = document.getElementById('stepJump');
-const elProgressLabel = document.getElementById('progressLabel');
-const elProgressBar = document.getElementById('progressBar');
-const elStartOverTop = document.getElementById('startOverTop');
+  let currentId = order[0];
+  const history = [];
 
-const helpBackdrop = document.getElementById('helpBackdrop');
-const helpClose = document.getElementById('helpClose');
-const helpTitle = document.getElementById('helpTitle');
-const helpBody = document.getElementById('helpBody');
+  const elJump = document.getElementById("step-jump");
+  const elLabel = document.getElementById("progress-label");
+  const elBar = document.getElementById("progress-bar");
+  const elPill = document.getElementById("pill-text");
+  const elTitle = document.getElementById("step-title");
+  const elBody = document.getElementById("step-body");
+  const elButtons = document.getElementById("btn-row");
 
-const zoomBackdrop = document.getElementById('zoomBackdrop');
-const zoomClose = document.getElementById('zoomClose');
-const zoomImg = document.getElementById('zoomImg');
+  // modal
+  const modalOverlay = document.getElementById("modal-overlay");
+  const modalTitle = document.getElementById("modal-title");
+  const modalBody = document.getElementById("modal-body");
+  const modalCloseBtns = document.querySelectorAll("[data-modal-close]");
 
-const stepById = new Map(STEPS.map(s => [s.id, s]));
-const stepByLabel = new Map(STEPS.map(s => [s.stepNumber, s]));
-const order = STEPS.map(s => s.id);
+  modalCloseBtns.forEach(btn => btn.addEventListener("click", closeModal));
+  modalOverlay.addEventListener("click", (e)=>{ if(e.target === modalOverlay) closeModal(); });
+  document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") closeModal(); });
 
-let currentId = order[0];
-let historyStack = [];
+  function normalizeKey(s){
+    return (s||"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  }
 
-function setProgress() {
-  const idx = order.indexOf(currentId);
-  const pct = Math.round((idx / Math.max(1, (order.length - 1))) * 100);
-  elProgressLabel.textContent = `Step ${stepById.get(currentId)?.stepNumber || ''}`;
-  elProgressBar.style.width = `${pct}%`;
-  document.querySelector('.progress-bar-wrap')?.setAttribute('aria-valuenow', String(pct));
-}
+  function setJumpOptions(){
+    elJump.innerHTML = "";
+    order.forEach((id) => {
+      const st = steps[id];
+      if(!st) return;
+      const opt = document.createElement("option");
+      const num = st.num;
+      const numLabel = (id === "stop_staff" || id === "wrap_no_adopt") ? `${num}.` : `${num}.`;
+      opt.value = id;
+      opt.textContent = `${numLabel} ${st.title}`;
+      elJump.appendChild(opt);
+    });
+  }
 
-function sanitizeAndEnhance(container) {
-  // Wrap tables for horizontal scrolling
-  container.querySelectorAll('table').forEach(t => {
-    if (t.parentElement && t.parentElement.classList.contains('table-wrap')) return;
-    const wrap = document.createElement('div');
-    wrap.className = 'table-wrap';
-    t.parentNode.insertBefore(wrap, t);
-    wrap.appendChild(t);
-  });
+  function computeProgress(id){
+    const idx = order.indexOf(id);
+    const pct = idx >= 0 ? (idx / Math.max(1, order.length-1)) * 100 : 0;
+    elBar.style.width = `${pct}%`;
+    const st = steps[id];
+    elLabel.textContent = `Step ${st.num}`;
+  }
 
-  // Convert Word bullet paragraphs to nested ULs
-  const paras = Array.from(container.querySelectorAll('p'));
-  const makeList = () => {
-    const ul = document.createElement('ul');
-    ul.className = 'clean';
-    return ul;
+  function renderTableWrap(){
+    // wrap any tables in a scroll container
+    const tables = elBody.querySelectorAll("table");
+    tables.forEach((t)=>{
+      if(t.parentElement && t.parentElement.classList.contains("table-wrap")) return;
+      const wrap = document.createElement("div");
+      wrap.className = "table-wrap";
+      t.parentNode.insertBefore(wrap, t);
+      wrap.appendChild(t);
+    });
+  }
+
+  function renderStep(id, pushHistory=true){
+    const st = steps[id];
+    if(!st) return;
+
+    if(pushHistory && currentId !== id){
+      history.push(currentId);
+    }
+    currentId = id;
+
+    elJump.value = id;
+    computeProgress(id);
+
+    elPill.textContent = (st.section || "").toUpperCase();
+    elTitle.textContent = `Step ${st.num}: ${st.title}`;
+
+    elBody.innerHTML = st.content_html || "";
+    renderTableWrap();
+
+    // buttons
+    elButtons.innerHTML = "";
+    const btns = st.buttons || [];
+
+    btns.forEach((b)=>{
+      const btn = document.createElement("button");
+      btn.className = b.style || "outline";
+      btn.textContent = b.label;
+
+      const label = (b.label || "").trim();
+
+      // actions
+      if(label.toLowerCase().startsWith("back")){
+        btn.addEventListener("click", goBack);
+      } else if(label.toLowerCase().startsWith("start over")){
+        btn.addEventListener("click", startOver);
+      } else if((b.style === "outline" || b.style === "neutral") && /how|where|show|what if/i.test(label)){
+        btn.addEventListener("click", ()=>openHelpForLabel(st, label));
+      } else {
+        btn.addEventListener("click", ()=>advanceByLabel(st, label));
+      }
+
+      elButtons.appendChild(btn);
+    });
+
+    // Always include Back if missing (except first step)
+    if(currentId !== order[0] && !btns.some(b => (b.label||"").toLowerCase().startsWith("back"))){
+      const back = document.createElement("button");
+      back.className = "outline";
+      back.textContent = "Back";
+      back.addEventListener("click", goBack);
+      elButtons.appendChild(back);
+    }
+  }
+
+  function advanceByLabel(st, label){
+    // Branch logic based on current step + label
+    const id = st.id;
+
+    // Step 1 branch
+    if(id === "step1"){
+      if(/scheduled/i.test(label)) return renderStep("step2");
+      if(/walk/i.test(label)) return renderStep("step3");
+    }
+
+    // Step 2 + 3 go to 4 on Yes
+    if(id === "step2" || id === "step3"){
+      if(/^yes/i.test(label)) return renderStep("step4");
+    }
+
+    // Step 4 branches
+    if(id === "step4"){
+      if(/^no/i.test(label)) return renderStep("step5");
+      if(/^yes/i.test(label)) return renderStep("stop_staff");
+    }
+
+    // Step 5 branches
+    if(id === "step5"){
+      if(/^yes/i.test(label)) return renderStep("step6");
+      if(/^no/i.test(label)) return renderStep("wrap_no_adopt");
+    }
+
+    // Default: go to next in order
+    const idx = order.indexOf(id);
+    if(idx >= 0 && idx < order.length-1){
+      return renderStep(order[idx+1]);
+    }
+  }
+
+  function openHelpForLabel(step, label){
+    const helps = step.helps || [];
+    if(!helps.length){
+      openModal("Help", "<div class='help-text'>No help is configured for this step yet.</div>");
+      return;
+    }
+    const key = normalizeKey(label);
+    // try exact match in parentheses titles
+    let h = helps.find(x => normalizeKey(x.title) === key);
+    if(!h){
+      // try contains
+      h = helps.find(x => normalizeKey(x.title).includes(key) || key.includes(normalizeKey(x.title)));
+    }
+    if(!h){
+      // if only one help, use it
+      if(helps.length === 1) h = helps[0];
+    }
+    if(!h){
+      const list = helps.map(x => `<li>${escapeHtml(x.title)}</li>`).join("");
+      openModal("Help", `<div class='help-text'><p>Select one of these help topics:</p><ul>${list}</ul></div>`);
+      return;
+    }
+
+    if(h.file){
+      const fname = h.file;
+      const desc = h.description ? `<div class='help-text' style='margin:0 0 10px'>${escapeHtml(h.description)}</div>` : "";
+      openModal(h.title, `${desc}${renderZoomImage(fname)}`);
+    } else {
+      const text = (h.raw || []).map(t => `<p>${escapeHtml(t)}</p>`).join("");
+      openModal(h.title, `<div class='help-text'>${text}</div>`);
+    }
+  }
+
+  function renderZoomImage(src){
+    const safeSrc = encodeURI(src);
+    return `
+      <div class="zoom-wrap">
+        <div class="zoom-controls">
+          <button type="button" data-zoom="-">-</button>
+          <button type="button" data-zoom="reset">Reset</button>
+          <button type="button" data-zoom="+">+</button>
+          <button type="button" data-zoom="open">Open</button>
+        </div>
+        <img class="zoom-img" data-zoom-img src="${safeSrc}" alt="">
+      </div>
+    `;
+  }
+
+  function wireZoomControls(){
+    const img = modalBody.querySelector("[data-zoom-img]");
+    if(!img) return;
+
+    let scale = 1;
+
+    function apply(){
+      img.style.transform = `scale(${scale})`;
+    }
+
+    modalBody.querySelectorAll("[data-zoom]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const action = btn.getAttribute("data-zoom");
+        if(action === "+"){ scale = Math.min(3, scale + 0.2); apply(); }
+        else if(action === "-"){ scale = Math.max(1, scale - 0.2); apply(); }
+        else if(action === "reset"){ scale = 1; apply(); }
+        else if(action === "open"){ window.open(img.src, "_blank"); }
+      });
+    });
+
+    apply();
+  }
+
+  function openModal(title, html){
+    modalTitle.textContent = title || "Help";
+    modalBody.innerHTML = html || "";
+    modalOverlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+    // zoom controls
+    wireZoomControls();
+  }
+
+  function closeModal(){
+    modalOverlay.classList.remove("open");
+    modalBody.innerHTML = "";
+    document.body.style.overflow = "";
+  }
+
+  function goBack(){
+    const prev = history.pop();
+    if(prev) renderStep(prev, false);
+  }
+
+  window.startOver = function(){
+    history.length = 0;
+    renderStep(order[0], false);
   };
 
-  let ul = null;
-  let subUl = null;
+  window.jumpToStep = function(id){
+    if(!steps[id]) return;
+    history.length = 0;
+    renderStep(id, false);
+  };
 
-  function flush() {
-    ul = null;
-    subUl = null;
+  function escapeHtml(str){
+    return (str||"")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
   }
 
-  paras.forEach(p => {
-    const txt = (p.textContent || '').trim();
-    const startsBullet = txt.startsWith('·');
-    const startsSub = txt.startsWith('o ') || txt.startsWith('o\t') || txt.startsWith('o\u00A0');
-    if (startsBullet) {
-      if (!ul) {
-        ul = makeList();
-        p.parentNode.insertBefore(ul, p);
-        subUl = null;
-      }
-      const li = document.createElement('li');
-      li.textContent = txt.replace(/^·\s*/, '');
-      ul.appendChild(li);
-      p.remove();
-    } else if (startsSub && ul) {
-      // attach as sub-bullet of previous li
-      const lastLi = ul.lastElementChild;
-      if (!lastLi) return;
-      if (!subUl) {
-        subUl = makeList();
-        lastLi.appendChild(subUl);
-      }
-      const li = document.createElement('li');
-      li.textContent = txt.replace(/^o\s*/, '');
-      subUl.appendChild(li);
-      p.remove();
-    } else {
-      flush();
-    }
-  });
-}
-
-function renderStep(stepId, pushHistory=true) {
-  const step = stepById.get(stepId);
-  if (!step) return;
-
-  if (pushHistory && stepId !== currentId) {
-    historyStack.push(currentId);
-  }
-  currentId = stepId;
-
-  // Step content
-  elStepHost.innerHTML = '';
-  const wrapper = document.createElement('div');
-
-  const pill = document.createElement('div');
-  pill.className = 'pill';
-  pill.innerHTML = '<span class="dot"></span><span>' + escapeHtml(step.section || '') + '</span>';
-
-  const title = document.createElement('div');
-  title.className = 'step-title';
-  title.textContent = `Step ${step.stepNumber}: ${step.title}`;
-
-  wrapper.appendChild(pill);
-  wrapper.appendChild(title);
-
-  if (step.section) {
-    const sub = document.createElement('div');
-    sub.className = 'step-sub';
-    sub.innerHTML = '<em>Section: ' + escapeHtml(step.section) + '</em>';
-    wrapper.appendChild(sub);
-  }
-
-  const body = document.createElement('div');
-  body.className = 'step-body';
-  body.innerHTML = step.bodyHtml || '';
-  sanitizeAndEnhance(body);
-
-  wrapper.appendChild(body);
-  elStepHost.appendChild(wrapper);
-
-  // Buttons
-  elButtonRow.innerHTML = '';
-  (step.buttons || []).forEach(btn => {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'btn ' + (btn.style || 'outline');
-    b.textContent = btn.label;
-    b.addEventListener('click', () => handleButton(btn, step));
-    elButtonRow.appendChild(b);
-  });
-
-  setProgress();
-  elJump.value = step.id;
-}
-
-function handleButton(btn, step) {
-  const a = btn.action || {type:'none'};
-  if (a.type === 'reset') {
-    historyStack = [];
-    renderStep(order[0], false);
-    return;
-  }
-  if (a.type === 'back') {
-    const prev = historyStack.pop();
-    if (prev) renderStep(prev, false);
-    return;
-  }
-  if (a.type === 'help') {
-    openHelp(step, a.key);
-    return;
-  }
-  if (a.type === 'goto') {
-    const targetStep = stepByLabel.get(a.target);
-    if (targetStep) renderStep(targetStep.id, true);
-    return;
-  }
-}
-
-function openHelp(step, key) {
-  const h = (step.helps || {})[key] || findHelpFallback(step, key);
-  if (!h) return;
-
-  helpTitle.textContent = h.title || key || 'Help';
-  helpBody.innerHTML = '';
-
-  if (h.description) {
-    const d = document.createElement('div');
-    d.className = 'desc';
-    d.textContent = h.description;
-    helpBody.appendChild(d);
-  }
-
-  if (h.file) {
-    const img = document.createElement('img');
-    img.src = './' + h.file;
-    img.alt = h.title || 'Help image';
-    img.addEventListener('click', () => openZoom(img.src, img.alt));
-    helpBody.appendChild(img);
-  }
-
-  if (h.text) {
-    const pre = document.createElement('div');
-    pre.style.whiteSpace = 'pre-wrap';
-    pre.style.fontWeight = '650';
-    pre.textContent = h.text;
-    helpBody.appendChild(pre);
-  }
-
-  helpBackdrop.hidden = false;
-}
-
-function findHelpFallback(step, key) {
-  const helps = step.helps || {};
-  // Try contains match
-  const foundKey = Object.keys(helps).find(k => k.toLowerCase().includes(String(key||'').toLowerCase()));
-  return foundKey ? helps[foundKey] : null;
-}
-
-function closeHelp() {
-  helpBackdrop.hidden = true;
-  helpBody.innerHTML = '';
-}
-
-function openZoom(src, alt) {
-  zoomImg.src = src;
-  zoomImg.alt = alt || '';
-  zoomBackdrop.hidden = false;
-}
-
-function closeZoom() {
-  zoomBackdrop.hidden = true;
-  zoomImg.src = '';
-}
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"]/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-}
-
-function initJump() {
-  elJump.innerHTML = '';
-  STEPS.forEach(s => {
-    const opt = document.createElement('option');
-    opt.value = s.id;
-    opt.textContent = `${s.stepNumber}. ${s.title}`;
-    elJump.appendChild(opt);
-  });
-  elJump.addEventListener('change', () => {
-    const id = elJump.value;
-    if (!id) return;
-    renderStep(id, true);
-  });
-}
-
-elStartOverTop.addEventListener('click', () => {
-  historyStack = [];
+  // init
+  setJumpOptions();
   renderStep(order[0], false);
-});
 
-helpClose.addEventListener('click', closeHelp);
-helpBackdrop.addEventListener('click', (e) => {
-  if (e.target === helpBackdrop) closeHelp();
-});
-
-zoomClose.addEventListener('click', closeZoom);
-zoomBackdrop.addEventListener('click', (e) => {
-  if (e.target === zoomBackdrop) closeZoom();
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    if (!zoomBackdrop.hidden) closeZoom();
-    else if (!helpBackdrop.hidden) closeHelp();
-  }
-});
-
-initJump();
-renderStep(order[0], false);
+})();
