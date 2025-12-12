@@ -1,54 +1,51 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>FKR Adoption Workflow</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="header-title">FKR ADOPTION WORKFLOW v4</div>
-      <div class="header-subtitle">Staff checklist for adoptions &amp; follow-up</div>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>FKR ADOPTION WORKFLOW</h1>
+      <p>Staff checklist for adoptions &amp; follow-up</p>
     </div>
   </header>
 
-  <main class="app">
-    <section class="card">
-      <div class="topbar">
-        <button id="btn-startover" class="btn outline">Start over</button>
-
+  <main class="page">
+    <section class="card" aria-label="Workflow">
+      <div class="toolbar">
+        <button id="btn-startover" class="btn outline btn-startover" type="button">Start over</button>
         <div class="jump">
           <label for="jumpSelect">Jump to step:</label>
           <select id="jumpSelect"></select>
         </div>
       </div>
 
-      <div class="progress-wrap">
+      <div class="progress">
         <div id="progressLabel" class="progress-label">Step 1</div>
-        <div class="progress-bar">
-          <div id="progressFill" class="progress-fill"></div>
-        </div>
+        <div class="progress-track"><div id="progressFill" class="progress-fill"></div></div>
       </div>
 
-      <div class="pill" id="sectionPill"><span class="dot"></span><span id="sectionName"></span></div>
+      <div class="pill-row">
+        <div class="pill"><span class="dot"></span><span id="sectionName">START</span></div>
+      </div>
 
-      <h1 id="stepTitle" class="step-title"></h1>
-
+      <h2 id="stepTitle" class="step-title"></h2>
       <div id="stepBody" class="step-body"></div>
-
       <div id="buttonsRow" class="buttons"></div>
     </section>
   </main>
 
-  <div id="helpOverlay" class="help-overlay" aria-hidden="true">
-    <div class="help-modal" role="dialog" aria-modal="true">
-      <div class="help-modal-top">
-        <div class="help-modal-title" id="helpTitle">Help</div>
-        <button class="btn outline help-close" id="helpClose">Close</button>
+  <div id="helpOverlay" class="overlay" aria-hidden="true">
+    <div class="overlay-card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="overlay-header">
+        <h3 id="helpTitle">Help</h3>
+        <button id="helpClose" class="btn outline btn-small" type="button">Close</button>
       </div>
-      <div id="helpContent" class="help-content"></div>
+      <div id="helpContent" class="overlay-content"></div>
     </div>
   </div>
 

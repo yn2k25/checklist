@@ -1,256 +1,185 @@
-/* FKR workflow - v4 (loads steps.json at runtime) */
-(function() {
+(function(){
   'use strict';
+  const $ = (id)=>document.getElementById(id);
+  const esc = (s)=>String(s||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 
-  function escapeHtml(s) {
-    return String(s || '')
-      .replaceAll('&','&amp;')
-      .replaceAll('<','&lt;')
-      .replaceAll('>','&gt;');
+  async function loadSteps(){
+    const r = await fetch('steps.json?_=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) throw new Error('steps.json ' + r.status);
+    const j = await r.json();
+    if(!Array.isArray(j) || !j.length) throw new Error('steps.json empty');
+    return j;
   }
 
-  function showFatal(title, detail) {
-    let box = document.getElementById('fkr-fatal');
-    if (!box) {
-      box = document.createElement('div');
-      box.id = 'fkr-fatal';
-      box.style.position = 'fixed';
-      box.style.left = '12px';
-      box.style.right = '12px';
-      box.style.bottom = '12px';
-      box.style.zIndex = '99999';
-      box.style.background = '#fff';
-      box.style.border = '2px solid #b62e28';
-      box.style.borderRadius = '14px';
-      box.style.padding = '12px 12px';
-      box.style.boxShadow = '0 10px 30px rgba(0,0,0,.25)';
-      box.style.fontFamily = 'system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif';
-      document.body.appendChild(box);
-    }
-    box.innerHTML = `<div style="font-weight:900;font-size:16px;color:#b62e28;">${escapeHtml(title)}</div>
-                     <div style="margin-top:6px;font-size:13px;white-space:pre-wrap;color:#111;">${escapeHtml(detail || '')}</div>`;
-  }
-
-  window.addEventListener('error', (e) => {
-    const msg = e?.message || 'Unknown error';
-    const src = e?.filename ? `${e.filename}:${e.lineno || ''}:${e.colno || ''}` : '';
-    showFatal('JavaScript error', msg + (src ? "\n" + src : ''));
-  });
-
-  window.addEventListener('unhandledrejection', (e) => {
-    const reason = e?.reason ? (e.reason.stack || String(e.reason)) : 'Unknown rejection';
-    showFatal('Unhandled promise rejection', reason);
-  });
-
-  function $(id) { return document.getElementById(id); }
-
-  function cleanBodyHtml(html) {
-    return (html || '')
+  function cleanBodyHtml(html){
+    return (html||'')
       .replace(/<p[^>]*>\s*<i>\s*Section:\s*[^<]+<\/i>\s*<\/p>/gi,'')
-      .replace(/class="Mso[^"]*"/g, '')
-      .replace(/class=Mso[^\s>]+/g, '');
+      .replace(/class="Mso[^"]*"/g,'')
+      .replace(/class=Mso[^\s>]+/g,'');
   }
 
-  async function loadSteps() {
-    const url = 'steps.json?_=' + Date.now();
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`Failed to load steps.json (${res.status})`);
-    return await res.json();
-  }
-
-  function initApp(STEPS) {
-    if (!Array.isArray(STEPS) || STEPS.length === 0) {
-      showFatal('No steps loaded', 'STEPS array is empty. Check steps.json content.');
-      return;
-    }
-
+  function init(steps){
     const els = {
-      jump: $('jumpSelect'),
-      startOver: $('btn-startover'),
-      progressLabel: $('progressLabel'),
-      progressFill: $('progressFill'),
-      sectionName: $('sectionName'),
-      stepTitle: $('stepTitle'),
-      stepBody: $('stepBody'),
-      buttonsRow: $('buttonsRow'),
-      helpOverlay: $('helpOverlay'),
-      helpClose: $('helpClose'),
-      helpTitle: $('helpTitle'),
-      helpContent: $('helpContent'),
+      jump:$('jumpSelect'), startOver:$('btn-startover'),
+      progressLabel:$('progressLabel'), progressFill:$('progressFill'),
+      sectionName:$('sectionName'), stepTitle:$('stepTitle'),
+      stepBody:$('stepBody'), buttonsRow:$('buttonsRow'),
+      helpOverlay:$('helpOverlay'), helpClose:$('helpClose'),
+      helpTitle:$('helpTitle'), helpContent:$('helpContent')
     };
 
-    const missing = Object.entries(els).filter(([k,v]) => !v).map(([k]) => k);
-    if (missing.length) {
-      showFatal('Page markup mismatch', 'Missing element ids in index.html: ' + missing.join(', ') +
-        '\nMake sure you replaced index.html exactly.');
-      return;
+    let currentId = steps[0].id;
+    let interaction = null; // 'appointment'|'walkin'
+
+    const idxById = (id)=> steps.findIndex(s=>s.id===id);
+
+    function closeHelp(){
+      els.helpOverlay.classList.remove('active');
+      els.helpOverlay.setAttribute('aria-hidden','true');
     }
-
-    let currentId = STEPS[0].id;
-    let interactionType = null;
-
-    function idxById(id) { return STEPS.findIndex(s => s.id === id); }
-
-    function setProgress() {
-      const i = idxById(currentId);
-      const n = Math.max(STEPS.length, 1);
-      els.progressLabel.textContent = `Step ${i >= 0 ? (i + 1) : 1}`;
-      els.progressFill.style.width = `${((i+1)/n)*100}%`;
-    }
-
-    function openHelp(item) {
-      els.helpTitle.textContent = item.title || 'Help';
-      let html = '';
-      if (item.img) html += `<img src="${item.img}" alt="${escapeHtml(item.title || 'Help')}">`;
-      if (item.desc) html += `<div class="desc">${escapeHtml(item.desc)}</div>`;
-      if (item.bullets && item.bullets.length) {
-        html += `<ul>${item.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`;
+    function openHelp(h){
+      els.helpTitle.textContent = h.title || 'Help';
+      let html='';
+      if(h.img) html += `<img src="${h.img}" alt="${esc(h.title||'Help')}">`;
+      if(h.desc) html += `<div class="desc">${esc(h.desc)}</div>`;
+      if(h.bullets && h.bullets.length){
+        html += '<ul>' + h.bullets.map(b=>`<li>${esc(b)}</li>`).join('') + '</ul>';
       }
-      els.helpContent.innerHTML = html || '<p>No help content available.</p>';
+      els.helpContent.innerHTML = html || '<p>No help content.</p>';
       els.helpOverlay.classList.add('active');
       els.helpOverlay.setAttribute('aria-hidden','false');
     }
 
-    function closeHelp() {
-      els.helpOverlay.classList.remove('active');
-      els.helpOverlay.setAttribute('aria-hidden','true');
+    function setProgress(){
+      const i = idxById(currentId);
+      const n = steps.length;
+      els.progressLabel.textContent = 'Step ' + (i>=0 ? (i+1) : 1);
+      els.progressFill.style.width = ((Math.max(i,0)+1)/n*100) + '%';
     }
 
-    function buildButtons(step, goto) {
-      els.buttonsRow.innerHTML = '';
-      const btns = step.buttons || [];
-      const helps = step.helps || [];
-
-      const add = (label, style, onClick) => {
-        const b = document.createElement('button');
-        b.className = `btn ${style}`;
-        b.type = 'button';
-        b.textContent = label;
-        b.addEventListener('click', onClick);
-        els.buttonsRow.appendChild(b);
-        return b;
-      };
-
-      function nextLinear() {
-        const i = idxById(currentId);
-        if (i >= 0 && i < STEPS.length - 1) goto(STEPS[i+1].id);
-      }
-      function prevLinear() {
-        const i = idxById(currentId);
-        if (i > 0) goto(STEPS[i-1].id);
-      }
-
-      btns.forEach((b) => {
-        if (!b || b.kind === 'help' || b.kind === 'restart') return;
-
-        if (b.kind === 'back') {
-          add('Back', 'outline', () => {
-            if (step.id === 'step4') {
-              if (interactionType === 'appointment') return goto('step2');
-              if (interactionType === 'walkin') return goto('step3');
-            }
-            prevLinear();
-          });
-          return;
-        }
-
-        if (step.id === 'step1') {
-          const lower = (b.label || '').toLowerCase();
-          if (lower.includes('scheduled')) {
-            add('Scheduled appointment', 'outline', () => { interactionType = 'appointment'; goto('step2'); });
-            return;
-          }
-          if (lower.includes('walk')) {
-            add('Walk in', 'outline', () => { interactionType = 'walkin'; goto('step3'); });
-            return;
-          }
-        }
-
-        if (step.id === 'step4') {
-          const lower = (b.label || '').toLowerCase();
-          if (lower.startsWith('no')) { add(b.label, 'primary', () => goto('step5')); return; }
-          if (lower.startsWith('yes')) { add(b.label, 'danger', () => goto('step26_stop')); return; }
-        }
-
-        if (step.id === 'step5') {
-          const lower = (b.label || '').toLowerCase();
-          if (lower.startsWith('yes')) { add(b.label, 'primary', () => goto('step6')); return; }
-          if (lower.startsWith('no')) { add(b.label, 'danger', () => goto('step26_wrap')); return; }
-        }
-
-        if (b.kind === 'next') {
-          add(b.label, 'primary', () => {
-            if (step.id === 'step2' || step.id === 'step3') return goto('step4');
-            nextLinear();
-          });
-          return;
-        }
-
-        if (b.kind === 'branch_no') {
-          add(b.label, 'danger', () => nextLinear());
-          return;
-        }
-      });
-
-      const backBtn = Array.from(els.buttonsRow.children).find(x => x.textContent.trim().toLowerCase() === 'back') || null;
-      helps.forEach(h => {
-        const b = document.createElement('button');
-        b.className = 'btn outline';
-        b.type = 'button';
-        b.textContent = h.title || 'Help';
-        b.addEventListener('click', () => openHelp(h));
-        if (backBtn) els.buttonsRow.insertBefore(b, backBtn);
-        else els.buttonsRow.appendChild(b);
-      });
-    }
-
-    function renderJump() {
-      els.jump.innerHTML = '';
-      STEPS.forEach((s, i) => {
-        const opt = document.createElement('option');
-        opt.value = s.id;
-        let label = s.title || '';
-        if (s.id === 'step26_wrap') label = 'Step 26: Wrap up - no adoption';
-        if (s.id === 'step26_stop') label = 'Step 26: Stop and notify staff';
-        const nice = label.replace(/^Step\s+\d+\s*:\s*/i,'');
-        opt.textContent = `${i+1}. ${nice}`;
+    function renderJump(){
+      els.jump.innerHTML='';
+      steps.forEach((s,i)=>{
+        const opt=document.createElement('option');
+        opt.value=s.id;
+        const nice=(s.title||'').replace(/^Step\s+\d+\s*:\s*/i,'') || s.id;
+        opt.textContent=(i+1)+'. '+nice;
         els.jump.appendChild(opt);
       });
     }
 
-    function goto(id) {
-      const step = STEPS.find(s => s.id === id);
-      if (!step) return;
-      currentId = id;
-      els.jump.value = id;
-      els.sectionName.textContent = (step.section || '').toUpperCase() || 'WORKFLOW';
-      els.stepTitle.textContent = step.title || '';
-      els.stepBody.innerHTML = cleanBodyHtml(step.bodyHtml || '');
-      buildButtons(step, goto);
+    function goto(id){
+      const step = steps.find(s=>s.id===id);
+      if(!step) return;
+      currentId=id;
+      els.jump.value=id;
+      els.sectionName.textContent=(step.section||'Workflow').toUpperCase();
+      els.stepTitle.textContent=step.title||'';
+      els.stepBody.innerHTML=cleanBodyHtml(step.bodyHtml||'');
+      buildButtons(step);
       setProgress();
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      window.scrollTo({top:0,behavior:'auto'});
+    }
+
+    function nextLinear(){
+      const i=idxById(currentId);
+      if(i>=0 && i<steps.length-1) goto(steps[i+1].id);
+    }
+    function prevLinear(){
+      const i=idxById(currentId);
+      if(i>0) goto(steps[i-1].id);
+    }
+
+    function actionForButton(step,b){
+      const label=(b.label||'').toLowerCase();
+
+      if(step.id==='step1'){
+        if(label.includes('scheduled')) return ()=>{interaction='appointment'; goto('step2');};
+        if(label.includes('walk')) return ()=>{interaction='walkin'; goto('step3');};
+      }
+      if((step.id==='step2'||step.id==='step3') && b.kind==='next') return ()=>goto('step4');
+
+      if(step.id==='step4'){
+        if(label.startsWith('no')) return ()=>goto('step5');
+        if(label.startsWith('yes')) return ()=>goto('step26_stop');
+        if(b.kind==='back') return ()=>{
+          if(interaction==='appointment') return goto('step2');
+          if(interaction==='walkin') return goto('step3');
+          return prevLinear();
+        };
+      }
+
+      if(step.id==='step5'){
+        if(label.startsWith('yes')) return ()=>goto('step6');
+        if(label.startsWith('no')) return ()=>goto('step26_wrap');
+      }
+
+      if(b.kind==='back') return ()=>prevLinear();
+      if(b.kind==='restart') return ()=>{interaction=null; goto('step1');};
+      if(b.kind==='next') return ()=>nextLinear();
+      if(b.kind==='no') return ()=>nextLinear();
+      if(b.kind==='util'){
+        const match=(step.helps||[]).find(h=> (h.title||'').toLowerCase()===(b.label||'').toLowerCase());
+        if(match) return ()=>openHelp(match);
+        return ()=>{};
+      }
+      return ()=>{};
+    }
+
+    function buildButtons(step){
+      els.buttonsRow.innerHTML='';
+      const nodes=[];
+
+      (step.buttons||[]).forEach(b=>{
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.textContent=b.label||'';
+        if(b.kind==='next') btn.className='btn primary';
+        else if(b.kind==='no') btn.className='btn danger';
+        else btn.className='btn outline';
+        btn.addEventListener('click', actionForButton(step,b));
+        nodes.push({kind:b.kind,node:btn,label:(b.label||'')});
+      });
+
+      const utilTitles=new Set(nodes.filter(x=>x.kind==='util').map(x=>x.label.trim().toLowerCase()));
+      (step.helps||[]).forEach(h=>{
+        const t=(h.title||'Help').trim();
+        if(!t) return;
+        if(utilTitles.has(t.toLowerCase())) return;
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.className='btn outline';
+        btn.textContent=t;
+        btn.addEventListener('click', ()=>openHelp(h));
+        nodes.push({kind:'util',node:btn,label:t});
+      });
+
+      const prim=nodes.filter(x=>x.kind==='next').map(x=>x.node);
+      const no=nodes.filter(x=>x.kind==='no').map(x=>x.node);
+      const util=nodes.filter(x=>x.kind==='util').map(x=>x.node);
+      const back=nodes.filter(x=>x.kind==='back').map(x=>x.node);
+      const restart=nodes.filter(x=>x.kind==='restart').map(x=>x.node);
+
+      [...prim,...no,...util,...back].forEach(n=>els.buttonsRow.appendChild(n));
+
+      if(step.id==='step26_wrap'||step.id==='step26_stop'||step.id==='step27'){
+        restart.forEach(n=>els.buttonsRow.appendChild(n));
+      }
     }
 
     els.helpClose.addEventListener('click', closeHelp);
-    els.helpOverlay.addEventListener('click', (e) => { if (e.target === els.helpOverlay) closeHelp(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeHelp(); });
+    els.helpOverlay.addEventListener('click', (e)=>{ if(e.target===els.helpOverlay) closeHelp(); });
+    document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeHelp(); });
 
-    els.startOver.addEventListener('click', () => { interactionType = null; goto('step1'); });
-    els.jump.addEventListener('change', (e) => goto(e.target.value));
+    els.startOver.addEventListener('click', ()=>{interaction=null; goto('step1');});
+    els.jump.addEventListener('change', (e)=>goto(e.target.value));
 
     renderJump();
     goto('step1');
   }
 
-  async function boot() {
-    try {
-      const steps = await loadSteps();
-      initApp(steps);
-    } catch (e) {
-      showFatal('Failed to start app', e.stack || String(e));
-    }
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
-  else boot();
+  (async()=>{
+    try{ init(await loadSteps()); }
+    catch(e){ alert('FKR app failed: ' + (e && (e.message||e.stack) ? (e.message||e.stack) : String(e))); }
+  })();
 })();
