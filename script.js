@@ -1,7 +1,59 @@
+/* FKR workflow - v3 (robust init + on-screen error reporting) */
 
-// Generated from your manual (doc/pdf/html). Single-page workflow renderer.
+(function() {
+  'use strict';
 
-const STEPS = [{"id": "step1", "num": 1, "title": "Step 1: What type of interaction is this?", "section": "Start", "bodyHtml": "<p class=\"MsoNormal\"><i>Section: Start</i></p>
+  function showFatal(title, detail) {
+    try {
+      let box = document.getElementById('fkr-fatal');
+      if (!box) {
+        box = document.createElement('div');
+        box.id = 'fkr-fatal';
+        box.style.position = 'fixed';
+        box.style.left = '12px';
+        box.style.right = '12px';
+        box.style.bottom = '12px';
+        box.style.zIndex = '99999';
+        box.style.background = '#fff';
+        box.style.border = '2px solid #b62e28';
+        box.style.borderRadius = '14px';
+        box.style.padding = '12px 12px';
+        box.style.boxShadow = '0 10px 30px rgba(0,0,0,.25)';
+        box.style.fontFamily = 'system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif';
+        box.innerHTML = `<div style="font-weight:900;font-size:16px;color:#b62e28;">${escapeHtml(title)}</div>
+                         <div style="margin-top:6px;font-size:13px;white-space:pre-wrap;color:#111;">${escapeHtml(detail || '')}</div>`;
+        document.body.appendChild(box);
+      } else {
+        box.innerHTML = `<div style="font-weight:900;font-size:16px;color:#b62e28;">${escapeHtml(title)}</div>
+                         <div style="margin-top:6px;font-size:13px;white-space:pre-wrap;color:#111;">${escapeHtml(detail || '')}</div>`;
+      }
+    } catch (e) {
+      // last resort
+      console.log('Fatal:', title, detail);
+      alert(title + "\n\n" + (detail || ''));
+    }
+  }
+
+  function escapeHtml(s) {
+    return String(s || '')
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;');
+  }
+
+  window.addEventListener('error', (e) => {
+    const msg = e?.message || 'Unknown error';
+    const src = e?.filename ? `${e.filename}:${e.lineno || ''}:${e.colno || ''}` : '';
+    showFatal('JavaScript error', msg + (src ? "\n" + src : ''));
+  });
+
+  window.addEventListener('unhandledrejection', (e) => {
+    const reason = e?.reason ? (e.reason.stack || String(e.reason)) : 'Unknown rejection';
+    showFatal('Unhandled promise rejection', reason);
+  });
+
+  // IMPORTANT: Keep steps data parse-time safe.
+  const STEPS = [{"id": "step1", "num": 1, "title": "Step 1: What type of interaction is this?", "section": "Start", "bodyHtml": "<p class=\"MsoNormal\"><i>Section: Start</i></p>
 <p class=\"MsoNormal\">Choose one to begin.</p>", "buttons": [{"kind": "help", "label": "Scheduled appointment"}, {"kind": "help", "label": "Walk in"}], "helps": []}, {"id": "step2", "num": 2, "title": "Step 2: Appointment prep", "section": "Before meet and greet", "bodyHtml": "<p class=\"MsoNormal\"><i>Section: Before meet and greet</i></p>
 <p class=\"MsoNormal\">Checklist:</p>
 <p class=\"MsoListBulletCxSpFirst\"><span style=\"font-family:Symbol\">·<span style='font:7.0pt \"Times New Roman\"'>       </span></span><span dir=\"LTR\"></span><span style='font-family:\"Cambria Math\",serif'>Scheduled: Check
@@ -1274,224 +1326,249 @@ page</p>
 staff before continuing.</p>", "buttons": [{"kind": "help", "label": "Situation resolved - restart"}, {"kind": "back", "label": "Back"}], "helps": []}, {"id": "step27", "num": 27, "title": "Step 27: Checklist complete", "section": "Complete", "bodyHtml": "<p class=\"MsoNormal\"><i>Section: Complete</i></p>
 <p class=\"MsoNormal\">You are done with this case. Tap below to start over.</p>", "buttons": [{"kind": "help", "label": "Start again"}], "helps": []}];
 
-let currentId = STEPS[0]?.id || null;
-let interactionType = null; // "appointment" | "walkin"
+  let currentId = STEPS[0]?.id || null;
+  let interactionType = null; // "appointment" | "walkin"
 
-const elJump = document.getElementById('jumpSelect');
-const elStartOver = document.getElementById('btn-startover');
-const elProgressLabel = document.getElementById('progressLabel');
-const elProgressFill = document.getElementById('progressFill');
-const elSectionName = document.getElementById('sectionName');
-const elStepTitle = document.getElementById('stepTitle');
-const elStepBody = document.getElementById('stepBody');
-const elButtonsRow = document.getElementById('buttonsRow');
-
-const helpOverlay = document.getElementById('helpOverlay');
-const helpClose = document.getElementById('helpClose');
-const helpTitle = document.getElementById('helpTitle');
-const helpContent = document.getElementById('helpContent');
-
-function idxById(id){
-  return STEPS.findIndex(s => s.id === id);
-}
-
-function setProgress(){
-  const i = idxById(currentId);
-  const n = Math.max(STEPS.length, 1);
-  elProgressLabel.textContent = `Step ${i >= 0 ? (i+1) : 1}`;
-  elProgressFill.style.width = `${((i+1)/n)*100}%`;
-}
-
-function renderJump(){
-  elJump.innerHTML = '';
-  STEPS.forEach((s, i) => {
-    const opt = document.createElement('option');
-    opt.value = s.id;
-    let label = s.title;
-    if (s.id === 'step26_wrap') label = 'Step 26: Wrap up - no adoption';
-    if (s.id === 'step26_stop') label = 'Step 26: Stop and notify staff';
-    const nice = label.replace(/^Step\s+\d+\s*:\s*/i,'');
-    opt.textContent = `${i+1}. ${nice}`;
-    elJump.appendChild(opt);
-  });
-  elJump.addEventListener('change', (e) => {
-    goto(e.target.value);
-  });
-}
-
-function cleanBodyHtml(html){
-  return (html || '')
-    .replace(/<p[^>]*>\s*<i>\s*Section:\s*[^<]+<\/i>\s*<\/p>/gi,'')
-    .replace(/class="Mso[^"]*"/g, '')
-    .replace(/class=Mso[^\s>]+/g, '');
-}
-
-function escapeHtml(s){
-  return String(s || '')
-    .replaceAll('&','&amp;')
-    .replaceAll('<','&lt;')
-    .replaceAll('>','&gt;');
-}
-
-function openHelp(item){
-  helpTitle.textContent = item.title || 'Help';
-  let html = '';
-  if (item.img){
-    html += `<img src="${item.img}" alt="${escapeHtml(item.title || 'Help')}">`;
+  function $(id) {
+    return document.getElementById(id);
   }
-  if (item.desc){
-    html += `<div class="desc">${escapeHtml(item.desc)}</div>`;
+
+  function idxById(id) {
+    return STEPS.findIndex(s => s.id === id);
   }
-  if (item.bullets && item.bullets.length){
-    html += `<ul>${item.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`;
+
+  function cleanBodyHtml(html) {
+    return (html || '')
+      .replace(/<p[^>]*>\s*<i>\s*Section:\s*[^<]+<\/i>\s*<\/p>/gi,'')
+      .replace(/class="Mso[^"]*"/g, '')
+      .replace(/class=Mso[^\s>]+/g, '');
   }
-  helpContent.innerHTML = html || '<p>No help content available.</p>';
-  helpOverlay.classList.add('active');
-  helpOverlay.setAttribute('aria-hidden', 'false');
-}
 
-function closeHelp(){
-  helpOverlay.classList.remove('active');
-  helpOverlay.setAttribute('aria-hidden', 'true');
-}
+  function openHelp(item, els) {
+    els.helpTitle.textContent = item.title || 'Help';
+    let html = '';
+    if (item.img) {
+      html += `<img src="${item.img}" alt="${escapeHtml(item.title || 'Help')}">`;
+    }
+    if (item.desc) {
+      html += `<div class="desc">${escapeHtml(item.desc)}</div>`;
+    }
+    if (item.bullets && item.bullets.length) {
+      html += `<ul>${item.bullets.map(b => `<li>${escapeHtml(b)}</li>`).join('')}</ul>`;
+    }
+    els.helpContent.innerHTML = html || '<p>No help content available.</p>';
+    els.helpOverlay.classList.add('active');
+    els.helpOverlay.setAttribute('aria-hidden','false');
+  }
 
-helpClose.addEventListener('click', closeHelp);
-helpOverlay.addEventListener('click', (e) => {
-  if (e.target === helpOverlay) closeHelp();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeHelp();
-});
+  function closeHelp(els) {
+    els.helpOverlay.classList.remove('active');
+    els.helpOverlay.setAttribute('aria-hidden','true');
+  }
 
-function buildButtons(step){
-  elButtonsRow.innerHTML = '';
-  const btns = step.buttons || [];
-  const helps = step.helps || [];
-
-  const add = (label, style, onClick) => {
-    const b = document.createElement('button');
-    b.className = `btn ${style}`;
-    b.type = 'button';
-    b.textContent = label;
-    b.addEventListener('click', onClick);
-    elButtonsRow.appendChild(b);
-  };
-
-  function nextLinear(){
+  function setProgress(els) {
     const i = idxById(currentId);
-    if (i >= 0 && i < STEPS.length - 1) goto(STEPS[i+1].id);
-  }
-  function prevLinear(){
-    const i = idxById(currentId);
-    if (i > 0) goto(STEPS[i-1].id);
+    const n = Math.max(STEPS.length, 1);
+    if (els.progressLabel) els.progressLabel.textContent = `Step ${
+      i >= 0 ? (i + 1) : 1
+    }`;
+    if (els.progressFill) els.progressFill.style.width = `${((i+1)/n)*100}%`;
   }
 
-  // Build primary/back buttons first (skip help placeholders)
-  btns.forEach((b) => {
-    if (b.kind === 'help' || b.kind === 'restart') return;
+  function buildButtons(step, els, goto) {
+    els.buttonsRow.innerHTML = '';
+    const btns = step.buttons || [];
+    const helps = step.helps || [];
 
-    if (b.kind === 'back'){
-      add('Back', 'outline', () => {
-        if (step.id === 'step4'){
-          if (interactionType === 'appointment') return goto('step2');
-          if (interactionType === 'walkin') return goto('step3');
+    const add = (label, style, onClick) => {
+      const b = document.createElement('button');
+      b.className = `btn ${style}`;
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', onClick);
+      els.buttonsRow.appendChild(b);
+      return b;
+    };
+
+    function nextLinear() {
+      const i = idxById(currentId);
+      if (i >= 0 && i < STEPS.length - 1) goto(STEPS[i+1].id);
+    }
+    function prevLinear() {
+      const i = idxById(currentId);
+      if (i > 0) goto(STEPS[i-1].id);
+    }
+
+    btns.forEach((b) => {
+      if (b.kind === 'help' || b.kind === 'restart') return;
+
+      if (b.kind === 'back') {
+        add('Back', 'outline', () => {
+          if (step.id === 'step4') {
+            if (interactionType === 'appointment') return goto('step2');
+            if (interactionType === 'walkin') return goto('step3');
+          }
+          prevLinear();
+        });
+        return;
+      }
+
+      if (step.id === 'step1') {
+        const lower = (b.label || '').toLowerCase();
+        if (lower.includes('scheduled')) {
+          add('Scheduled appointment', 'outline', () => {
+            interactionType = 'appointment';
+            goto('step2');
+          });
+          return;
         }
-        prevLinear();
-      });
-      return;
-    }
+        if (lower.includes('walk')) {
+          add('Walk in', 'outline', () => {
+            interactionType = 'walkin';
+            goto('step3');
+          });
+          return;
+        }
+      }
 
-    if (step.id === 'step1'){
-      const lower = (b.label || '').toLowerCase();
-      if (lower.includes('scheduled')){
-        add('Scheduled appointment', 'outline', () => {
-          interactionType = 'appointment';
-          goto('step2');
+      if (step.id === 'step4') {
+        const lower = (b.label || '').toLowerCase();
+        if (lower.startsWith('no')) {
+          add(b.label, 'primary', () => goto('step5'));
+          return;
+        }
+        if (lower.startsWith('yes')) {
+          add(b.label, 'danger', () => goto('step26_stop'));
+          return;
+        }
+      }
+
+      if (step.id === 'step5') {
+        const lower = (b.label || '').toLowerCase();
+        if (lower.startsWith('yes')) {
+          add(b.label, 'primary', () => goto('step6'));
+          return;
+        }
+        if (lower.startsWith('no')) {
+          add(b.label, 'danger', () => goto('step26_wrap'));
+          return;
+        }
+      }
+
+      if (b.kind === 'next') {
+        add(b.label, 'primary', () => {
+          if (step.id === 'step2' || step.id === 'step3') return goto('step4');
+          nextLinear();
         });
         return;
       }
-      if (lower.includes('walk')){
-        add('Walk in', 'outline', () => {
-          interactionType = 'walkin';
-          goto('step3');
+
+      if (b.kind === 'branch_no') {
+        add(b.label, 'danger', () => nextLinear());
+        return;
+      }
+    });
+
+    // help buttons
+    const backBtn = Array.from(els.buttonsRow.children).find(x => x.textContent.trim().toLowerCase() === 'back') || null;
+    helps.forEach(h => {
+      const b = document.createElement('button');
+      b.className = 'btn outline';
+      b.type = 'button';
+      b.textContent = h.title || 'Help';
+      b.addEventListener('click', () => openHelp(h, els));
+      if (backBtn) els.buttonsRow.insertBefore(b, backBtn);
+      else els.buttonsRow.appendChild(b);
+    });
+  }
+
+  function init() {
+    try {
+      if (!Array.isArray(STEPS) || STEPS.length === 0) {
+        showFatal('No steps loaded', 'STEPS array is empty. The parsed manual may have failed.');
+        return;
+      }
+
+      const els = {
+        jump: $('jumpSelect'),
+        startOver: $('btn-startover'),
+        progressLabel: $('progressLabel'),
+        progressFill: $('progressFill'),
+        sectionName: $('sectionName'),
+        stepTitle: $('stepTitle'),
+        stepBody: $('stepBody'),
+        buttonsRow: $('buttonsRow'),
+        helpOverlay: $('helpOverlay'),
+        helpClose: $('helpClose'),
+        helpTitle: $('helpTitle'),
+        helpContent: $('helpContent'),
+      };
+
+      // Validate required elements
+      const missing = Object.entries(els).filter(([k,v]) => !v).map(([k]) => k);
+      if (missing.length) {
+        showFatal('Page markup mismatch', 'Missing element ids in index.html: ' + missing.join(', ') +
+          '\nMake sure you replaced index.html exactly.');
+        return;
+      }
+
+      function renderJump() {
+        els.jump.innerHTML = '';
+        STEPS.forEach((s, i) => {
+          const opt = document.createElement('option');
+          opt.value = s.id;
+          let label = s.title || '';
+          if (s.id === 'step26_wrap') label = 'Step 26: Wrap up - no adoption';
+          if (s.id === 'step26_stop') label = 'Step 26: Stop and notify staff';
+          const nice = label.replace(/^Step\s+\d+\s*:\s*/i,'');
+          opt.textContent = `${i+1}. ${nice}`;
+          els.jump.appendChild(opt);
         });
-        return;
       }
-    }
 
-    if (step.id === 'step4'){
-      const lower = (b.label || '').toLowerCase();
-      if (lower.startsWith('no')){
-        add(b.label, 'primary', () => goto('step5'));
-        return;
+      function goto(id) {
+        const step = STEPS.find(s => s.id === id);
+        if (!step) return;
+        currentId = id;
+        els.jump.value = id;
+        els.sectionName.textContent = (step.section || '').toUpperCase() || 'WORKFLOW';
+        els.stepTitle.textContent = step.title || '';
+        els.stepBody.innerHTML = cleanBodyHtml(step.bodyHtml || '');
+        buildButtons(step, els, goto);
+        setProgress(els);
+        window.scrollTo({ top: 0, behavior: 'auto' });
       }
-      if (lower.startsWith('yes')){
-        add(b.label, 'danger', () => goto('step26_stop'));
-        return;
-      }
-    }
 
-    if (step.id === 'step5'){
-      const lower = (b.label || '').toLowerCase();
-      if (lower.startsWith('yes')){
-        add(b.label, 'primary', () => goto('step6'));
-        return;
-      }
-      if (lower.startsWith('no')){
-        add(b.label, 'danger', () => goto('step26_wrap'));
-        return;
-      }
-    }
-
-    if (b.kind === 'next'){
-      add(b.label, 'primary', () => {
-        if (step.id === 'step2' || step.id === 'step3') return goto('step4');
-        nextLinear();
+      // help overlay wiring
+      els.helpClose.addEventListener('click', () => closeHelp(els));
+      els.helpOverlay.addEventListener('click', (e) => {
+        if (e.target === els.helpOverlay) closeHelp(els);
       });
-      return;
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeHelp(els);
+      });
+
+      els.startOver.addEventListener('click', () => {
+        interactionType = null;
+        goto('step1');
+      });
+
+      els.jump.addEventListener('change', (e) => {
+        goto(e.target.value);
+      });
+
+      renderJump();
+      goto('step1');
+
+    } catch (e) {
+      showFatal('Init failed', e.stack || String(e));
     }
+  }
 
-    if (b.kind === 'branch_no'){
-      add(b.label, 'danger', () => nextLinear());
-      return;
-    }
-  });
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
-  // Insert help buttons before Back if Back exists
-  const backBtn = Array.from(elButtonsRow.children).find(x => x.textContent.trim().toLowerCase() === 'back') || null;
-  helps.forEach(h => {
-    const b = document.createElement('button');
-    b.className = 'btn outline';
-    b.type = 'button';
-    b.textContent = h.title || 'Help';
-    b.addEventListener('click', () => openHelp(h));
-    if (backBtn) elButtonsRow.insertBefore(b, backBtn);
-    else elButtonsRow.appendChild(b);
-  });
-}
-
-function goto(id){
-  const step = STEPS.find(s => s.id === id);
-  if (!step) return;
-
-  currentId = id;
-  elJump.value = id;
-
-  elSectionName.textContent = (step.section || '').toUpperCase() || 'WORKFLOW';
-  elStepTitle.textContent = step.title;
-
-  elStepBody.innerHTML = cleanBodyHtml(step.bodyHtml);
-
-  buildButtons(step);
-  setProgress();
-
-  window.scrollTo({ top: 0, behavior: 'instant' });
-}
-
-elStartOver.addEventListener('click', () => {
-  interactionType = null;
-  goto('step1');
-});
-
-renderJump();
-goto('step1');
+})();
