@@ -141,7 +141,7 @@ async function boot() {
 
   // populate jump dropdown
   els.jumpSelect.innerHTML = "";
-  STEPS.forEach((s) => {
+  STEPS.forEach(s) => {
     const opt = document.createElement("option");
     opt.value = String(s.number);
     opt.textContent = `${s.number}. ${s.title}`;
