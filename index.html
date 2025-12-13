@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FKR Adoption Workflow</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <h1>FKR Adoption Workflow</h1>
+      <p>Staff checklist for adoptions and follow-up</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="app" class="app" aria-live="polite"></div>
+    <div id="fatal" class="fatal hidden" role="alert">
+      <h2>Could not load workflow data</h2>
+      <p id="fatalMsg"></p>
+      <p>Check that <code>steps.json</code> and <code>help.json</code> exist in the repo root and that GitHub Pages finished deploying.</p>
+    </div>
+  </main>
+
+  <!-- Help modal -->
+  <div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <div class="modal-card" role="document">
+      <div class="modal-head">
+        <div id="helpTitle" class="modal-title"></div>
+        <button type="button" id="helpClose" class="btn outline inline">Close</button>
+      </div>
+      <div id="helpBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
