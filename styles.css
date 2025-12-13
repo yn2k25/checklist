@@ -1,0 +1,14 @@
+body{font-family:system-ui;margin:0;background:#f4f1f0}
+.site-header{background:#9f2f25;color:#fff;padding:24px;text-align:center}
+.card{background:#fff;border-radius:16px;padding:24px;max-width:900px;margin:24px auto}
+button{padding:10px 16px;border-radius:999px;border:1px solid #aaa;cursor:pointer}
+button.primary{background:#1f6b3a;color:#fff;border:none}
+button.outline{background:#fff}
+button.danger{background:#b52a2a;color:#fff;border:none}
+.accordion{border:1px solid #ccc;border-radius:12px;margin-bottom:12px}
+.accordion-header{padding:12px;font-weight:600;cursor:pointer}
+.accordion-body{padding:12px;display:none}
+.accordion.open .accordion-body{display:block}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center}
+.modal.hidden{display:none}
+.modal-content{background:#fff;padding:20px;border-radius:12px}
