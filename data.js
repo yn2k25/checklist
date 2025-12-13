@@ -1,2 +1,0 @@
-window.FKR_STEPS = [
-];
