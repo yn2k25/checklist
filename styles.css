@@ -1,0 +1,20 @@
+
+body { font-family: system-ui; background:#f4f1f0; margin:0; }
+.header { background:#8c2f2b; color:white; padding:20px; text-align:center; }
+.card { background:white; border-radius:14px; padding:20px; max-width:960px; margin:20px auto; }
+button { padding:10px 16px; border-radius:999px; border:1px solid #ccc; margin:6px 6px 0 0; cursor:pointer; }
+.primary { background:#2f7d32; color:white; border:none; }
+.outline { background:white; }
+.danger { background:#b71c1c; color:white; border:none; }
+.accordion { border:1px solid #ccc; border-radius:12px; margin-top:12px; }
+.acc-head { padding:12px; font-weight:600; cursor:pointer; }
+.acc-body { padding:12px; display:none; }
+.accordion.open .acc-body { display:block; }
+.checkbox { display:flex; gap:10px; margin:6px 0; cursor:pointer; }
+.checkbox input { width:18px; height:18px; }
+table { width:100%; border-collapse:collapse; margin-top:8px; }
+td, th { border:1px solid #ccc; padding:6px; text-align:left; }
+.modal { position:fixed; inset:0; background:rgba(0,0,0,.4); display:flex; align-items:center; justify-content:center; }
+.modal.hidden { display:none; }
+.modal-content { background:white; padding:20px; border-radius:12px; max-width:90%; }
+img { max-width:100%; }
