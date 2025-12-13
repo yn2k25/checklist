@@ -1,196 +1,320 @@
-let STEPS = [];
-let HELP = {};
+(() => {
+  const el = (id) => document.getElementById(id);
 
-let currentStepIndex = 0;
+  const state = {
+    steps: [],
+    help: {},
+    currentIndex: 0,
+    started: false
+  };
 
-const els = {
-  startOverBtn: document.getElementById("startOverBtn"),
-  jumpSelect: document.getElementById("jumpSelect"),
-  progressLabel: document.getElementById("progressLabel"),
-  progressFill: document.getElementById("progressFill"),
-  stepPill: document.getElementById("stepPill"),
-  stepTitle: document.getElementById("stepTitle"),
-  stepBody: document.getElementById("stepBody"),
-  buttonArea: document.getElementById("buttonArea"),
+  // ------- Modal helpers -------
+  const backdrop = () => el('helpBackdrop');
+  const helpBody = () => el('helpBody');
 
-  modalBackdrop: document.getElementById("modalBackdrop"),
-  modalTitle: document.getElementById("modalTitle"),
-  modalBody: document.getElementById("modalBody"),
-  modalClose: document.getElementById("modalClose"),
-};
+  function openHelp(payload) {
+    // payload can be: {title, html} OR {title, image, description} OR {title, text}
+    const bd = backdrop();
+    if (!bd) return;
 
-function escapeHtml(str) {
-  return String(str ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;");
-}
+    el('helpTitle').textContent = payload?.title || 'Help';
 
-function normalizeStepsJson(json) {
-  // Accept:
-  // 1) [ ... ]
-  // 2) { steps: [ ... ] } or { data: [ ... ] }
-  // 3) { "1": {...}, "2": {...} } (object map)
-  if (Array.isArray(json)) return json;
+    const parts = [];
+    if (payload?.html) parts.push(payload.html);
+    if (payload?.text) parts.push(`<p>${escapeHtml(payload.text)}</p>`);
+    if (payload?.description) parts.push(`<p><em>${escapeHtml(payload.description)}</em></p>`);
+    if (payload?.image) parts.push(`<img src="${encodeURI(payload.image)}" alt="${escapeHtml(payload.title || 'Help image')}" />`);
 
-  if (json && typeof json === "object") {
-    if (Array.isArray(json.steps)) return json.steps;
-    if (Array.isArray(json.data)) return json.data;
+    helpBody().innerHTML = parts.join('') || '<p>No help content available.</p>';
 
-    const vals = Object.values(json);
-    if (vals.length && vals.every(v => v && typeof v === "object")) return vals;
+    bd.hidden = false;
+    document.body.style.overflow = 'hidden';
+
+    // focus Close for accessibility and to avoid "can't click" feeling on some overlays
+    el('helpCloseBtn')?.focus({preventScroll:true});
   }
-  return [];
-}
 
-function openModal(title, html) {
-  els.modalTitle.textContent = title || "Help";
-  els.modalBody.innerHTML = html || "";
-  els.modalBackdrop.hidden = false;
-  document.body.style.overflow = "hidden";
-}
+  function closeHelp() {
+    const bd = backdrop();
+    if (!bd) return;
+    bd.hidden = true;
+    helpBody().innerHTML = '';
+    document.body.style.overflow = '';
+  }
 
-function closeModal() {
-  els.modalBackdrop.hidden = true;
-  els.modalBody.innerHTML = "";
-  document.body.style.overflow = "";
-}
+  // Clicking on the dim backdrop closes; clicking inside modal does not.
+  function wireModal() {
+    const bd = backdrop();
+    if (!bd) return;
 
-function render() {
-  const step = STEPS[currentStepIndex];
-  if (!step) return;
-
-  // progress
-  els.progressLabel.textContent = `Step ${step.number}`;
-  const pct = (currentStepIndex) / Math.max(1, STEPS.length - 1) * 100;
-  els.progressFill.style.width = `${pct}%`;
-
-  // pill
-  els.stepPill.querySelector("span:last-child").textContent = step.pill || step.section || "";
-
-  // title + body
-  els.stepTitle.textContent = step.title || "";
-  els.stepBody.innerHTML = step.bodyHtml || "";
-
-  // buttons
-  els.buttonArea.innerHTML = "";
-  (step.buttons || []).forEach((b) => {
-    const btn = document.createElement("button");
-    btn.className = `btn ${b.style || "btn-outline"}`;
-    btn.textContent = b.label || "Button";
-
-    btn.addEventListener("click", () => {
-      // Help button opens modal
-      if (b.helpKey) {
-        const help = HELP[b.helpKey];
-        if (!help) {
-          openModal(b.label, `<p>Missing help content for: <b>${escapeHtml(b.helpKey)}</b></p>`);
-          return;
-        }
-
-        if (help.type === "image") {
-          openModal(
-            b.label,
-            `<div class="helpBlock">
-              <img class="helpImg" src="${escapeHtml(help.src)}" alt="${escapeHtml(help.description || b.label)}" />
-              ${help.description ? `<p class="helpDesc">${escapeHtml(help.description)}</p>` : ""}
-            </div>`
-          );
-          return;
-        }
-
-        if (help.type === "text") {
-          openModal(
-            b.label,
-            `<div class="helpBlock">
-              ${help.html ? help.html : `<p>${escapeHtml(help.text || "")}</p>`}
-            </div>`
-          );
-          return;
-        }
-      }
-
-      // navigation
-      if (typeof b.goto === "number") {
-        const idx = STEPS.findIndex(s => s.number === b.goto);
-        if (idx >= 0) currentStepIndex = idx;
-        render();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-
-      if (b.action === "back") {
-        currentStepIndex = Math.max(0, currentStepIndex - 1);
-        render();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
-
-      if (b.action === "next") {
-        currentStepIndex = Math.min(STEPS.length - 1, currentStepIndex + 1);
-        render();
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      }
+    bd.addEventListener('click', (e) => {
+      if (e.target === bd) closeHelp();
     });
 
-    els.buttonArea.appendChild(btn);
-  });
+    el('helpCloseBtn')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeHelp();
+    });
 
-  // jump select
-  els.jumpSelect.value = String(step.number);
-}
-
-async function boot() {
-  const [stepsRes, helpRes] = await Promise.all([
-    fetch("steps.json", { cache: "no-store" }),
-    fetch("help.json", { cache: "no-store" }),
-  ]);
-
-  if (!stepsRes.ok) throw new Error("Could not load steps.json");
-  if (!helpRes.ok) throw new Error("Could not load help.json");
-
-  const rawSteps = await stepsRes.json();
-  STEPS = normalizeStepsJson(rawSteps);
-  HELP = await helpRes.json();
-
-  if (!Array.isArray(STEPS) || STEPS.length === 0) {
-    throw new Error("steps.json loaded but did not contain a steps array");
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !bd.hidden) closeHelp();
+    });
   }
 
-  // populate jump dropdown
-  els.jumpSelect.innerHTML = "";
-  STEPS.forEach((s) => {
-    const opt = document.createElement("option");
-    opt.value = String(s.number);
-    opt.textContent = `${s.number}. ${s.title}`;
-    els.jumpSelect.appendChild(opt);
-  });
+  // ------- Data loading -------
+  async function fetchJsonNoStore(path) {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error(`${path} ${res.status}`);
+    return await res.json();
+  }
 
-  currentStepIndex = 0;
-  render();
-}
+  function normalizeStepsJson(raw) {
+    // Accept: [ ... ]  OR  { steps: [ ... ] }  OR  { data: [ ... ] }
+    if (Array.isArray(raw)) return raw;
+    if (raw && Array.isArray(raw.steps)) return raw.steps;
+    if (raw && Array.isArray(raw.data)) return raw.data;
+    return [];
+  }
 
-els.startOverBtn.addEventListener("click", () => {
-  currentStepIndex = 0;
-  render();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+  function normalizeHelpJson(raw) {
+    // Accept map: { "<key>": { ... } } or { help: { ... } }
+    if (!raw) return {};
+    if (raw.help && typeof raw.help === 'object') return raw.help;
+    return raw;
+  }
 
-els.jumpSelect.addEventListener("change", (e) => {
-  const num = Number(e.target.value);
-  const idx = STEPS.findIndex(s => s.number === num);
-  if (idx >= 0) currentStepIndex = idx;
-  render();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+  function computeStepNumber(step, idx) {
+    // Prefer explicit numeric fields if present
+    const n = step.stepNumber ?? step.step ?? step.number ?? step.num;
+    if (typeof n === 'number' && isFinite(n)) return n;
+    // Sometimes it's a string like "8"
+    const parsed = parseInt(n, 10);
+    if (!Number.isNaN(parsed)) return parsed;
+    return idx + 1;
+  }
 
-els.modalClose.addEventListener("click", closeModal);
-els.modalBackdrop.addEventListener("click", (e) => {
-  if (e.target === els.modalBackdrop) closeModal();
-});
+  function getStepTitle(step, idx) {
+    const base = step.title || step.question || step.name || '';
+    const n = computeStepNumber(step, idx);
+    // If title already starts with "Step X:" don't duplicate
+    if (/^Step\s+\d+\s*:/i.test(base)) return base;
+    return base ? `Step ${n}: ${base}` : `Step ${n}`;
+  }
 
-boot().catch((err) => {
-  document.body.innerHTML =
-    `<pre style="padding:16px;white-space:pre-wrap;">${escapeHtml(err.stack || err.message)}</pre>`;
-});
+  function getSectionPill(step) {
+    return step.pill || step.sectionPill || step.sectionLabel || step.section || ' ';
+  }
+
+  function getBodyHtml(step) {
+    // The steps.json may store already-sanitized HTML in bodyHtml/contentHtml/html.
+    const html = step.bodyHtml ?? step.contentHtml ?? step.html ?? '';
+    if (html) return html;
+
+    // Or it may store structured text: paragraphs, bullets, tables
+    if (Array.isArray(step.paragraphs)) {
+      return step.paragraphs.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    }
+    return '';
+  }
+
+  function getActions(step) {
+    // Support multiple possible field names
+    const actions = step.actions || step.buttons || step.ctas || [];
+    return Array.isArray(actions) ? actions : [];
+  }
+
+  function render() {
+    const steps = state.steps;
+    if (!steps.length) {
+      el('sectionPillText').textContent = 'No steps loaded';
+      el('stepTitle').textContent = 'Missing steps.json';
+      el('stepBody').innerHTML = '<p>Please confirm steps.json exists at the repo root and is valid JSON.</p>';
+      el('actions').innerHTML = '';
+      el('progressLabel').textContent = 'Step';
+      el('progressFill').style.width = '0%';
+      return;
+    }
+
+    const idx = Math.max(0, Math.min(state.currentIndex, steps.length - 1));
+    state.currentIndex = idx;
+
+    const step = steps[idx];
+    const n = computeStepNumber(step, idx);
+
+    el('progressLabel').textContent = `Step ${n}`;
+    el('progressFill').style.width = `${Math.round(((idx + 1) / steps.length) * 100)}%`;
+
+    el('sectionPillText').textContent = String(getSectionPill(step)).toUpperCase();
+    el('stepTitle').textContent = getStepTitle(step, idx);
+
+    el('stepBody').innerHTML = getBodyHtml(step) || '<p></p>';
+
+    // Actions
+    const actionsEl = el('actions');
+    actionsEl.innerHTML = '';
+
+    const actions = getActions(step);
+
+    actions.forEach((a) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn ' + (
+        a.style === 'primary' ? 'btn--primary' :
+        a.style === 'danger'  ? 'btn--danger' :
+        'btn--outline'
+      );
+      btn.textContent = a.label || 'Continue';
+
+      btn.addEventListener('click', () => {
+        if (a.type === 'help') {
+          // helpKey can reference help.json, or provide inline help data
+          if (a.helpKey && state.help[a.helpKey]) {
+            openHelp(normalizeHelpEntry(a.label, state.help[a.helpKey]));
+            return;
+          }
+          if (a.image || a.description || a.text || a.html) {
+            openHelp({ title: a.label || 'Help', image: a.image, description: a.description, text: a.text, html: a.html });
+            return;
+          }
+          openHelp({ title: a.label || 'Help', text: 'No help content available.' });
+          return;
+        }
+
+        if (a.type === 'nav') {
+          // by index
+          if (typeof a.toIndex === 'number') {
+            state.currentIndex = a.toIndex;
+            render();
+            syncJump();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+          // by step number
+          if (typeof a.toStepNumber === 'number') {
+            const target = state.steps.findIndex((s, i) => computeStepNumber(s, i) === a.toStepNumber);
+            if (target >= 0) {
+              state.currentIndex = target;
+              render();
+              syncJump();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              return;
+            }
+          }
+          // by id
+          if (a.toId) {
+            const target = state.steps.findIndex((s) => (s.id || s.stepId || '') === a.toId);
+            if (target >= 0) {
+              state.currentIndex = target;
+              render();
+              syncJump();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              return;
+            }
+          }
+        }
+
+        if (a.type === 'back') {
+          state.currentIndex = Math.max(0, state.currentIndex - 1);
+          render();
+          syncJump();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
+        // Default: next
+        state.currentIndex = Math.min(state.steps.length - 1, state.currentIndex + 1);
+        render();
+        syncJump();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      actionsEl.appendChild(btn);
+    });
+  }
+
+  function normalizeHelpEntry(title, entry) {
+    // entry might be {image, description} or {html} or {text}
+    return {
+      title: title || entry.title || 'Help',
+      image: entry.image || entry.img || entry.screenshot,
+      description: entry.description || entry.desc,
+      text: entry.text,
+      html: entry.html
+    };
+  }
+
+  function buildJump() {
+    const sel = el('jumpSelect');
+    sel.innerHTML = '';
+    state.steps.forEach((s, idx) => {
+      const n = computeStepNumber(s, idx);
+      const base = (s.title || s.question || s.name || '').replace(/^Step\s+\d+\s*:\s*/i, '');
+      const opt = document.createElement('option');
+      opt.value = String(idx);
+      opt.textContent = `${n}. ${base || `Step ${n}`}`;
+      sel.appendChild(opt);
+    });
+
+    sel.addEventListener('change', () => {
+      const idx = parseInt(sel.value, 10);
+      if (!Number.isNaN(idx)) {
+        state.currentIndex = idx;
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  }
+
+  function syncJump() {
+    const sel = el('jumpSelect');
+    if (!sel) return;
+    sel.value = String(state.currentIndex);
+  }
+
+  function wireStartOver() {
+    el('startOverBtn')?.addEventListener('click', () => {
+      state.currentIndex = 0;
+      render();
+      buildJump();
+      syncJump();
+      closeHelp();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+  async function init() {
+    wireModal();
+    wireStartOver();
+
+    try {
+      const [stepsRaw, helpRaw] = await Promise.all([
+        fetchJsonNoStore('./steps.json'),
+        // help.json is optional
+        fetchJsonNoStore('./help.json').catch(() => ({}))
+      ]);
+
+      state.steps = normalizeStepsJson(stepsRaw);
+      state.help = normalizeHelpJson(helpRaw);
+
+      buildJump();
+      syncJump();
+      render();
+    } catch (err) {
+      console.error(err);
+      el('sectionPillText').textContent = 'LOAD ERROR';
+      el('stepTitle').textContent = 'Could not load steps.json';
+      el('stepBody').innerHTML = `<p><strong>Error:</strong> ${escapeHtml(err?.message || String(err))}</p>`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
