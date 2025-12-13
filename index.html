@@ -3,54 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FKR Adoption Workflow v7-</title>
-  <link rel="stylesheet" href="styles.css?v=7">
+  <title>FKR Adoption Workflow</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app-shell">
-    <header class="site-header">
-      <h1>FKR ADOPTION WORKFLOW v7</h1>
-      <p>Staff checklist for adoptions &amp; follow-up</p>
-    </header>
 
-    <main class="site-main">
-      <div class="card" id="app">
-        <div class="top-row">
-          <button class="btn outline" id="start-over-top" type="button">Start over</button>
+<header class="site-header">
+  <h1>FKR Adoption Workflow</h1>
+  <p>Staff checklist for adoptions & follow-up</p>
+</header>
 
-          <div class="jump-wrap">
-            <label for="step-jump">Jump to step:</label>
-            <select id="step-jump"></select>
-          </div>
-        </div>
+<main class="app">
+  <div class="card">
 
-        <div class="progress">
-          <div class="progress-left">
-            <span class="progress-label" id="progress-label">Step 1</span>
-          </div>
-          <div class="progress-bar-wrap" aria-hidden="true">
-            <div id="progress-bar" class="progress-bar"></div>
-          </div>
-        </div>
+    <div class="top-row">
+      <button id="startOver" class="btn outline">Start over</button>
 
-        <div id="step-container"></div>
+      <div class="jump">
+        <label for="jumpSelect">Jump to step:</label>
+        <select id="jumpSelect"></select>
       </div>
-    </main>
-  </div>
-
-  <!-- Help modal (no static help content inside, JS injects) -->
-  <div id="help-overlay" class="modal-overlay" aria-hidden="true">
-    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="help-title">
-      <div class="modal-header">
-        <h2 id="help-title">Help</h2>
-        <button class="btn outline modal-close" id="help-close" type="button" aria-label="Close help">Close</button>
-      </div>
-      <div class="modal-body" id="help-body"></div>
     </div>
-  </div>
 
-  <script src="steps.js?v=7"></script>
-  <script src="help.js?v=7"></script>
-  <script src="script.js?v=7"></script>
+    <div class="progress">
+      <span id="stepLabel">Step</span>
+      <div class="bar">
+        <div id="barFill"></div>
+      </div>
+    </div>
+
+    <div id="stepContainer"></div>
+
+  </div>
+</main>
+
+<script src="app.js"></script>
 </body>
 </html>
