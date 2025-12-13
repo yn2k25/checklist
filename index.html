@@ -1,1 +1,58 @@
-<!doctype html><html><head><meta charset='utf-8'><title>FKR Adoption Workflow</title></head><body><h1>FKR Adoption Workflow</h1><p>Files reissued. Please replace all files.</p></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FKR Adoption Workflow</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <h1>FKR ADOPTION WORKFLOW</h1>
+      <p>Staff checklist for adoptions &amp; follow-up</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="topbar">
+        <button id="startOverBtn" class="btn btn-outline">Start over</button>
+
+        <div class="jump">
+          <label for="jumpSelect">Jump to step:</label>
+          <select id="jumpSelect"></select>
+        </div>
+      </div>
+
+      <div class="progressRow">
+        <div id="progressLabel" class="progressLabel">Step 1</div>
+        <div class="progressTrack">
+          <div id="progressFill" class="progressFill"></div>
+        </div>
+      </div>
+
+      <div id="stepPill" class="pill"><span class="dot"></span><span>SECTION</span></div>
+
+      <h2 id="stepTitle" class="stepTitle"></h2>
+
+      <div id="stepBody" class="stepBody"></div>
+
+      <div id="buttonArea" class="buttonArea"></div>
+    </section>
+  </main>
+
+  <!-- Help / modal -->
+  <div id="modalBackdrop" class="modalBackdrop" hidden>
+    <div class="modal">
+      <div class="modalHeader">
+        <h3 id="modalTitle">Help</h3>
+        <button id="modalClose" class="btn btn-outline">Close</button>
+      </div>
+      <div id="modalBody" class="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
