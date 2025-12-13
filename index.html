@@ -1,60 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FKR Adoption Workflow</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>FKR Adoption Workflow v7</title>
+  <note>This is a static site for GitHub Pages.</note>
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 <body>
-  <header class="topbar">
-    <div class="topbar__inner">
-      <div class="topbar__title">FKR ADOPTION WORKFLOW v7</div>
-      <div class="topbar__subtitle">Staff checklist for adoptions &amp; follow-up</div>
-    </div>
-  </header>
+  <div class="app-shell">
+    <header class="site-header">
+      <h1>FKR ADOPTION WORKFLOW v7</h1>
+      <p>Staff checklist for adoptions &amp; follow-up</p>
+    </header>
 
-  <main class="page">
-    <section class="card" aria-live="polite">
-      <div class="card__top">
-        <button class="btn btn--outline" id="startOverBtn" type="button">Start over</button>
+    <main class="site-main">
+      <div class="card" id="app">
+        <div class="top-row">
+          <button class="btn outline" id="start-over-top" type="button">Start over</button>
 
-        <div class="jump">
-          <label class="jump__label" for="jumpSelect">Jump to step:</label>
-          <select class="jump__select" id="jumpSelect"></select>
+          <div class="jump-wrap">
+            <label for="step-jump">Jump to step:</label>
+            <select id="step-jump"></select>
+          </div>
         </div>
-      </div>
 
-      <div class="progress">
-        <div class="progress__label" id="progressLabel">Step</div>
-        <div class="progress__bar">
-          <div class="progress__fill" id="progressFill"></div>
+        <div class="progress">
+          <div class="progress-left">
+            <span class="progress-label" id="progress-label">Step 1</span>
+          </div>
+          <div class="progress-bar-wrap" aria-hidden="true">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
         </div>
+
+        <div id="step-container"></div>
       </div>
+    </main>
+  </div>
 
-      <div class="pill" id="sectionPill">
-        <span class="pill__dot"></span>
-        <span class="pill__text" id="sectionPillText">Loading...</span>
+  <!-- Help modal (no static help content inside, JS injects) -->
+  <div id="help-overlay" class="modal-overlay" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="help-title">
+      <div class="modal-header">
+        <h2 id="help-title">Help</h2>
+        <button class="btn outline modal-close" id="help-close" type="button" aria-label="Close help">Close</button>
       </div>
-
-      <h1 class="stepTitle" id="stepTitle">Loading...</h1>
-      <div class="stepBody" id="stepBody"></div>
-
-      <div class="actions" id="actions"></div>
-    </section>
-  </main>
-
-  <!-- Help modal (no static help content, populated by JS) -->
-  <div class="modalBackdrop" id="helpBackdrop" hidden>
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
-      <div class="modal__head">
-        <div class="modal__title" id="helpTitle">Help</div>
-        <button class="btn btn--outline btn--compact" id="helpCloseBtn" type="button">Close</button>
-      </div>
-      <div class="modal__body" id="helpBody"></div>
+      <div class="modal-body" id="help-body"></div>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="steps.js?v=7"></script>
+  <script src="help.js?v=7"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>
