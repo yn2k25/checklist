@@ -1,24 +1,191 @@
-{
-  "steps": [
-    {
-      "id": 1,
-      "title": "What type of interaction is this?",
-      "section": "Start",
-      "phase": "START",
-      "intro": "Choose one to begin.",
-      "accordions": [],
-      "buttons": [
-        {
-          "label": "Scheduled appointment",
-          "style": "primary",
-          "next": 2
-        },
-        {
-          "label": "Walk in",
-          "style": "primary",
-          "next": 3
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "title": "What type of interaction is this?",
+    "section": "Start",
+    "phase": "START",
+    "html": "<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"2\">Scheduled appointment</button>\n<button class=\"btn primary full\" type=\"button\" data-next=\"3\">Walk in</button>\n</div>"
+  },
+  {
+    "id": 2,
+    "title": "Appointment prep",
+    "section": "Before meet and greet",
+    "phase": "BEFORE",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Check PP for Consultation Form</button><div class=\"acc-body\">\n<p>Find the person in PP</p>\n<p>Click Memos/Files</p>\n<p>Scroll to Memos section</p>\n<p>Find “Consultation Form”</p>\n<p>Review information</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"cf_location\">Where is the CF in PP?</button>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Check PP for Do Not Adopt (DNA)</button><div class=\"acc-body\">\n<p>If there is an alert for DNA, one should pop-up when you open the Person record.</p>\n<p>Also check memos for a DNA note.</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"dna_location\">Where to check Do Not Adopt (DNA)?</button>\n<p>--- End Accordions ---\nButton: Continue | primary | next: Step 4</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 3,
+    "title": "Walk in prep",
+    "section": "Before meet and greet",
+    "phase": "BEFORE",
+    "html": "<div class=\"checklist\">\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Have the visitor complete the Consultation Form</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Make sure all required questions are answered.</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Check  PP for Do Not Adopt (DNA)</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>If person does not exist in PP, you can create the record after meet &amp; greet.</span></label>\n</div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"4\">Continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 4,
+    "title": "Any concerning behavior?",
+    "section": "Meet and greet",
+    "phase": "MEET",
+    "html": "<p>Watch how the adopter interacts with the cat. Encourage questions. Ask questions about the home, children, other pets (both past and present), doggie doors etc. Ask about philosophies like indoor vs outdoor cats, declawing etc.  If anything feels off, pause and talk to staff.</p>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"5\">Everything looks good – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 5,
+    "title": "Did they choose a cat today?",
+    "section": "Decision",
+    "phase": "DECISION",
+    "html": "<p>If they clearly chose a specific cat today, pick Yes and move into the adoption steps.</p>\n<p>If they are still thinking, or no cat is going home today, pick No.</p>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"6\">Yes – proceeding with adoption</button>\n<button class=\"btn danger full\" type=\"button\" data-next=\"26\">No – no adoption today</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 6,
+    "title": "Does the adopter already have a Person record?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<p>From the main search, type their name and confirm if there is already a record for this person.</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">If the Person does NOT exist in PP create the Person record:</button><div class=\"acc-body\">\n<p>Use the green plus icon to create a new Person.</p>\n<p>Fill in name, address, phone, and email so you can contact them later.</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"create_person\">How to create a Person record</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"7\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 7,
+    "title": "Is contact info verified?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<p>Verify the Address, Phone  Number and Email address.</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Edit the contact</button><div class=\"acc-body\">\n<p>Click the green pencicl icon under the person’s name next to “Details”</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"edit_contact\">How to edit the contact info</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"8\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 8,
+    "title": "Has Outcome to Adoption been started?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Start an Adoption Outcome on the Person</button><div class=\"acc-body\">\n<p>Open the Person record for the adopter.</p>\n<p>Use the green plus menu to add a new Outcome.</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"start_adoption_outcome\">How to start Adoption Outcome</button>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Adoption Outcome fields</button><div class=\"acc-body\">\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Type:</td><td>Adoption</td></tr>\n<tr><td>Subtype</td><td>Kittyville</td></tr>\n<tr><td>Date</td><td>Today’s date</td></tr>\n<tr><td>Status</td><td>Completed</td></tr>\n<tr><td>Asilomar Status</td><td>Healthy (Unless stated otherwise on cat)</td></tr>\n<tr><td>Jurisdiction</td><td>Change to Person’s jurisdiction</td></tr>\n<tr><td>Person</td><td>Verify this matches</td></tr>\n<tr><td>Animals</td><td>Search and add the kitty (s)</td></tr>\n</tbody>\n</table>\n<button class=\"btn help inline\" type=\"button\" data-help=\"fill_outcome_form\">How to fill Outcome form</button>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Multiple Cats 🐈🐈 adopted?</button><div class=\"acc-body\">\n<p>For multiple cats, you need to repeat the search and add step for the second kitty.</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"fill_outcome_multicat\">Multi-cat Outcome example</button>\n<p>Tip: Click on the blue ID number for each cat, which will open the cat’s record in a new tab for upcoming steps.\n\n--- End Accordions ---</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"9\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 9,
+    "title": "Have vouchers been created?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<p>Each cat should have the correct voucher created.</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Create a voucher:</button><div class=\"acc-body\">\n<p>Go to the Cat record</p>\n<p>Click Vouchers/Waivers tab</p>\n<p>Click green + icon</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"create_voucher\">Where to create voucher</button>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Fill the Voucher form:</button><div class=\"acc-body\">\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Type</td><td>Care</td></tr>\n<tr><td>Subtype</td><td>EDAH 30-day Exam Voucher</td></tr>\n<tr><td>Issued</td><td>Today’s date</td></tr>\n<tr><td>Expiry</td><td>[ automatically calculated]</td></tr>\n<tr><td>Issued by</td><td>Fearless Kitty, Rescue</td></tr>\n</tbody>\n</table>\n<button class=\"btn help inline\" type=\"button\" data-help=\"fill_voucher_form\">How to fill Voucher form</button>\n<p>After saving vouchers on each cat, return to Person tab.\nClick Save on the Outcome form.</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"10\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 10,
+    "title": "Is microchip consent completed?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<p>NOTE: Checkboxes below are a visual aid only.\n\n☐  Inform adopter of the microchip</p>\n<div class=\"checklist\">\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Make sure the adopter understands – “Yes” is required.</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Petco Vital Care Core Program is optional.</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Click &quot;Save&quot; at the bottom of the page. This completes and creates the Outcome.</span></label>\n</div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"11\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 11,
+    "title": "Have folder contents been reviewed?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Review contents of red folder:</button><div class=\"acc-body\">\n<table>\n<thead><tr><th>Sheet</th><th>Description</th></tr></thead>\n<tbody>\n<tr><td>Adoption Disclosure(s):</td><td>Review Kitten and/or any Medical ADA&#x27;s with adopter and have them sign and date. If not a kitten, pull ADA and refile it. Ask adopter if they want a copy of ADA(s).</td></tr>\n<tr><td>Spay/Neuter date</td><td>If more than 2 weeks since surgery, pull the spay/neuter info and\nreturn to hanging file.</td></tr>\n<tr><td>Vaccination status</td><td>If 2nd vaccine due in future, give adopter the FKR Medical\nbusiness card; ask them to send email to address on card\nto request appointment date noted on form.</td></tr>\n<tr><td>Advice Document</td><td>Point out any pertinent areas based on situation\no Introducing new kitty to other cats, dogs, children,\no List of items to purchase if not already owned.</td></tr>\n<tr><td>Boutique Discount</td><td>$5 off a minimum $10 total- valid for 30 days</td></tr>\n<tr><td>Petco document</td><td>20% off ENTIRE purchase. Note Expiration Date</td></tr>\n<tr><td>Continuing Care:</td><td>This is for any other non-FKR kitties that the adopter has. Pull from folder if adopter has no non-FKR kitties.</td></tr>\n</tbody>\n</table>\n<div class=\"checklist\">\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Add copy of ADA to folder, if requested. Keep originals.</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Add kennel card to folder</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Give folder and contents to adopter</span></label>\n</div>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"12\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 12,
+    "title": "Has the contract been signed and emailed?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<p>Have the adopter read the laminated contract. Find out if there are any questions before proceeding.</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Create a Contract</button><div class=\"acc-body\">\n<p>Go to the Person page.</p>\n<p>On the Records tab, scroll to the Outcome record created today. (Previous FKR adopters may have a previous outcomes)</p>\n<p>On the right side, click the green Printer icon</p>\n<p>Select Contract  OR if  🐈🐈 select Multi-Animal Contract</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"create_contract\">Contract creation example</button>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Signing the Contract</button><div class=\"acc-body\">\n<p>Verify correct animal(s) listed on Contract page</p>\n<p>Scroll to the bottom of the page and click the green eSignature box.</p>\n<p>Have adopter sign via the signature pad. Click Next.</p>\n<p>Adoption counselor (you!) sign for the Organization. Click Finish.</p>\n<p>Scroll down on the new page displaying the contract. CIick &quot;Email&quot; button.</p>\n<p>Ensure confirmation &quot;E-mail Sent&quot; is there before closing the page.</p>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Review email contents to expect:</button><div class=\"acc-body\">\n<p>Medical History Report</p>\n<p>Your Adoption Contract</p>\n<p>24 PetWatch Microchip Registration Information</p>\n<p>Voucher</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"13\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 13,
+    "title": "Has payment been processed?",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<p>Payment should be collected and recorded correctly:</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Payment slip instructions</button><div class=\"acc-body\">\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Date, Kitty Name and Adopter Name</td><td>As appropriate</td></tr>\n<tr><td>Adoption Fee</td><td>Enter amount of adoption fee and note any variants to fee (Waived / reduced / name your fee event)</td></tr>\n<tr><td>Boutique Purchase</td><td>Itemize items purchased on back of slip, mark discounts if applicable. List total on front of slip. OR:\nHave adopter take all boutique purchases to front desk.</td></tr>\n<tr><td>Donations</td><td>As appropriate</td></tr>\n<tr><td>Payment</td><td>X line for payment type if cash or check\n·       Cash or check: staple to back of payment slip\n·       Debit/Credit card: type of card &amp; last 4 numbers of card as detected in Square confirmation. (Note Apple pay numbers may not match physical card #, so use the number recorded by Square).</td></tr>\n</tbody>\n</table>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">iPad Square application - Use for debit/credit card purchases:</button><div class=\"acc-body\">\n<p>Enter total collected</p>\n<p>Use ·c&quot; on lower left part of screen if need to correct amount.</p>\n<p>Tap on &quot;Review Transaction&quot; on bottom of screen and show adopter amount to be charged.</p>\n<p>Tap on “Process Transaction&quot;</p>\n<p>Ask if adopter wants receipt and after you select the correct method, have adopter enter own information.</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"14\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 14,
+    "title": "Final checks before leaving",
+    "section": "Adoption",
+    "phase": "ADOPTION",
+    "html": "<div class=\"checklist\">\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Microchip verified before carrier</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Kitten weight recorded</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Take photo of kitty with family, if signed release</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Litter sample if available</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>Red folder</span></label>\n</div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Age appropriate adoption bag given with:</button><div class=\"acc-body\">\n<div class=\"checklist\">\n<label class=\"chk\"><input type=\"checkbox\" /> <span>dry food</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>2 cans wet food</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>bag of treats</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>blanket</span></label>\n<label class=\"chk\"><input type=\"checkbox\" /> <span>2 toys.</span></label>\n</div>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"15\">Yes – Adopter has left</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 15,
+    "title": "Has adopter memo been completed?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Add an Adoption Outcome memo on the person record:</button><div class=\"acc-body\">\n<p>On the Person record, go to Memos/Files Tab</p>\n<p>·       Click the green + next to Memos.</p>\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Type</td><td>Adoption Outcome</td></tr>\n<tr><td>Subtype</td><td>Adopted</td></tr>\n<tr><td>Review date</td><td>Leave blank</td></tr>\n<tr><td>Comments</td><td>This should include key facts about the adopter and appointment and items you discussed you feel would be helpful if adopter calls with questions. \n• None of this information is being published and will remain private in PetPoint.</td></tr>\n</tbody>\n</table>\n<button class=\"btn help inline\" type=\"button\" data-help=\"add_adopter_memo\">Adoption Outcome Memo example</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"16\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 16,
+    "title": "Has cat outcome memo been completed?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<p>Repeat for 🐈🐈.</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Add a short outcome memo on Each Cat record.</button><div class=\"acc-body\">\n<p>Click Memos/Files.</p>\n<p>·       Click the green + sign next to Memos.</p>\n<table>\n<thead><tr><th>Type</th><th>Outcome</th></tr></thead>\n<tbody>\n<tr><td>Subtype</td><td>Adopt</td></tr>\n<tr><td>Review date</td><td>Leave blank</td></tr>\n<tr><td>Comments</td><td>You can add a simple sentence saying kitty was adopted and if they will join other pets in their new home. No other personal information about adopter.</td></tr>\n</tbody>\n</table>\n<button class=\"btn help inline\" type=\"button\" data-help=\"add_cat_memo\">Outcome memo on Cat</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"17\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 17,
+    "title": "Has association been updated?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<p>On the Person page, go to Associations tab</p>\n<p>If &quot;Adopter&quot; is already listed (previously adopted an FKR kitty), click “continue” below to proceed to next step</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Create an Association for Adopter</button><div class=\"acc-body\">\n<p>Note the Subtype on the “Potential Adopter” row.</p>\n<p>Click the green +</p>\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Type</td><td>Adopter</td></tr>\n<tr><td>Subtype</td><td>·       Should match the one from “Potential Adopter”\n·       If adopter was a walk in, select the same subtype as noted on page 2 of the Consultation Form</td></tr>\n</tbody>\n</table>\n<button class=\"btn help inline\" type=\"button\" data-help=\"association_form\">Show the Association form</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"18\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 18,
+    "title": "Have ADA forms been uploaded?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Scan Document:</button><div class=\"acc-body\">\n<p>Place Adoption Disclosure Document (Kitten or Medical) in scanner and push button</p>\n<p>Save to Downloads folder with filename in format: &quot;Adoption Disclosure Agreement - kitty name”</p>\n<p>If applicable (Medical ADA only):  Medical ADA - kitty name</p>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Upload Document:</button><div class=\"acc-body\">\n<p>·       On the Cat record, go to Memos/Files</p>\n<p>·       Click on green + sign next to Files</p>\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Name</td><td>&quot;Signed Kitten ADA - kitty name&quot; and/or \n&quot;Signed Medical ADA - kitty name&quot;</td></tr>\n<tr><td>Type</td><td>Adoption Document</td></tr>\n<tr><td>Subtype</td><td>Adoption Disclosure Agreement - ADA</td></tr>\n<tr><td>Expiration</td><td>Leave blank</td></tr>\n<tr><td>Select Files</td><td>Browse to Downloads folder and select files.</td></tr>\n</tbody>\n</table>\n<p>·       Click Upload</p>\n<p>·       Tear up and throw away the signed ADA</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"ada_upload\">ADA upload example</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"19\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 19,
+    "title": "Has consultation form been uploaded?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Scan Document:</button><div class=\"acc-body\">\n<p>Place Consultation Form in scanner and push button</p>\n<p>Save to Downloads folder with filename in format: &quot;Consultation Form -Adopter&#x27;s Name”</p>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Upload Document:</button><div class=\"acc-body\">\n<p>On the Person record, go to Memos/Files</p>\n<p>Click on green + sign next to Files</p>\n<table>\n<thead><tr><th>Field</th><th>Value</th></tr></thead>\n<tbody>\n<tr><td>Name</td><td>Consultation Form</td></tr>\n<tr><td>Type</td><td>Adoption Document</td></tr>\n<tr><td>Subtype</td><td>Adoption Consultation</td></tr>\n<tr><td>Expiration</td><td>Leave blank</td></tr>\n<tr><td>Select Files</td><td>Browse to Downloads folder and select files.</td></tr>\n</tbody>\n</table>\n<p>Click Upload</p>\n<p>Tear up and throw away the Consultation Form</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"cf_upload\">Consultation form upload example</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"20\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 20,
+    "title": "Has receipt been entered in PetPoint?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<p>This is the Receipt in PP, not the payment slip completed earlier, but you will need to reference that.</p>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Create a Receipt in PP:</button><div class=\"acc-body\">\n<p>On the Person page, in top right corner, click green +</p>\n<p>Choose Receipt</p>\n<table>\n<tbody>\n<tr><td>Cash Drawer</td><td>Choose how the adopter pays</td></tr>\n<tr><td>Reference</td><td>If card used, add card type (Visa, MC, Discover, etc) and last 4 numbers of card from the Payment Slip.</td></tr>\n<tr><td>Animals</td><td>·       Enter the name of kitty adopted to search and add.\n·       🐈🐈  Repeat for multiple kitties</td></tr>\n<tr><td>Person</td><td>Make sure adopter is listed</td></tr>\n<tr><td>Items</td><td>·       Choose the item based on Kitty’s age.\n·       For single kitty, it will default kitty info.\n·       For 🐈🐈 : \no   Details will pop-up, select the Kitty from the list.\no   Add another item based on second kitty’s age\no   Details will pop-up, select second kitty from list.</td></tr>\n</tbody>\n</table>\n<p>If any discounts, click the button below for steps before continuing.</p>\n<p>Click Pay button</p>\n<p>In the next pop-up, for Type – ALWAYS choose “Cash”</p>\n<p>Click Save</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"receipt_create\">Where to create Receipt</button>\n<button class=\"btn help inline\" type=\"button\" data-help=\"receipt_form\">How to complete Receipt form?</button>\n<button class=\"btn help inline\" type=\"button\" data-help=\"receipt_multicat\">How to 🐈🐈 Multi-Cat Receipt form?</button>\n</div></div>\n<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Adjusting with Discounts:</button><div class=\"acc-body\">\n<p>If discounting the fee of the cat(s), do the following steps :</p>\n<p>·       Click on the Green Pencil icon on the right line of the cat with the discounted fee.</p>\n<p>·       Add the discount - either % or $ amount</p>\n<p>·       Review that the subtotal is correct</p>\n<p>·       Select the appropriate Discount Reason</p>\n<p>o    When using the ·other&quot; reason, add information regarding the situation and who approved the discount.</p>\n<p>·       Click Save</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"receipt_discount\">Adding a Discount?</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"21\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 21,
+    "title": "Has calendar been updated?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Update the appointment with correct notes or outcome:</button><div class=\"acc-body\">\n<p>Click the Calendar icon to open the Visual Calendar window.</p>\n<p>Double-click on the adoption appointment you are working on. An Appointment Overview box will pop up.</p>\n<p>Scroll down and click the blue &quot;Edit Appointment&quot; Box.</p>\n<p>Page will open behind the &quot;Adoption Overview&quot; screen. Be sure to go to that screen.</p>\n<table>\n<tbody>\n<tr><td>Subtype</td><td>Leave the selected &quot;Meet and Greet”\nthere.</td></tr>\n<tr><td>Status</td><td>Select &quot;Completed&quot;.</td></tr>\n<tr><td>Status Reason</td><td>Select &quot;Adopted&quot; or &quot;Did Not\nAdopt&quot; as appropriate.</td></tr>\n<tr><td>Start Date/Time</td><td>Enter the date and time the\nappointment was scheduled to start.</td></tr>\n<tr><td>End Date/Time</td><td>Enter the date and time the appointment was scheduled to end (one hour after the start).\nIf the appointment ended early and you are updating the calendar before the scheduled end time, you may enter the current time.</td></tr>\n<tr><td>Assigned To</td><td>Select your name under the drop-down menu or\n&quot;Fearless Kitty Rescue&quot; if your name is not listed.</td></tr>\n<tr><td>Calendar color</td><td>Leave it to whatever is selected (usually pink).</td></tr>\n</tbody>\n</table>\n<p>Click Submit Appointment</p>\n<button class=\"btn help inline\" type=\"button\" data-help=\"update_calendar\">How to update Calendar</button>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"22\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 22,
+    "title": "Has photo been texted to Kim?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<p>Send the approved adoption photo for social media or records.</p>\n<p>Photo should be vertical orientation &amp; taken wide angle (from urther away) to allow room for cropping as needed</p>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"23\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 23,
+    "title": "Has Outlook follow-up email been sent?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">Send the Outlook adoption email :</button><div class=\"acc-body\">\n<p>Open Outlook</p>\n<p>Click on &quot;Create New Message&quot;</p>\n<p>BCC: Adoption Notification (the To and CC are left blank)</p>\n<p>Subject: Name(s) of cats adopted</p>\n<p>Message: Name(s) of cats adopted, PP done, and then indicate if photo was sent. Also include the name(s) of adoption counselors working that day at the end of message.</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"24\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 24,
+    "title": "Have payment slips been filed?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<p>Place completed payment slip with card or check in Barbs folder</p>\n<p>·       If adopter paid with cash, place payment slip/cash in black lock box.</p>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"25\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 25,
+    "title": "Have whiteboards been updated?",
+    "section": "After adoption",
+    "phase": "AFTER",
+    "html": "<p>Room White Board: Remove kitty&#x27;s name or the photo in frame.</p>\n<p>Large White Board by Medical: Remove kitty&#x27;s name</p>\n<p>Adoption Board: Write next number, kitty&#x27;s name, circled A, and date.</p>\n<p>If FTA- add in lower right section of Adoption Board.</p>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"26\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 26,
+    "title": "Wrap up – no adoption",
+    "section": "No adoption",
+    "phase": "NO ADOPTION",
+    "html": "<div class=\"accordion\"><button class=\"acc-head\" type=\"button\" aria-expanded=\"false\">If no cat was adopted, make sure the notes and future follow up are clear.</button><div class=\"acc-body\">\n<p>Add Future adopt - needs discussion memo if needed on the Person page</p>\n<p>Upload consultation form to Person record</p>\n<p>Update calendar with correct reason</p>\n</div></div>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"27\">Yes – continue</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  },
+  {
+    "id": 27,
+    "title": "Checklist complete",
+    "section": "Complete",
+    "phase": "END",
+    "html": "<p>You are done with this case. Tap below to start over.</p>\n<div class=\"actions actions-main\">\n<button class=\"btn primary full\" type=\"button\" data-next=\"28\">Start Over</button>\n<button class=\"btn outline full\" type=\"button\" data-back=\"1\">Back</button>\n</div>"
+  }
+]
