@@ -26,6 +26,23 @@ function escapeHtml(str) {
     .replaceAll(">", "&gt;");
 }
 
+function normalizeStepsJson(json) {
+  // Accept:
+  // 1) [ ... ]
+  // 2) { steps: [ ... ] } or { data: [ ... ] }
+  // 3) { "1": {...}, "2": {...} } (object map)
+  if (Array.isArray(json)) return json;
+
+  if (json && typeof json === "object") {
+    if (Array.isArray(json.steps)) return json.steps;
+    if (Array.isArray(json.data)) return json.data;
+
+    const vals = Object.values(json);
+    if (vals.length && vals.every(v => v && typeof v === "object")) return vals;
+  }
+  return [];
+}
+
 function openModal(title, html) {
   els.modalTitle.textContent = title || "Help";
   els.modalBody.innerHTML = html || "";
@@ -53,7 +70,6 @@ function render() {
 
   // title + body
   els.stepTitle.textContent = step.title || "";
-  // body is trusted from your doc export - it is your own content
   els.stepBody.innerHTML = step.bodyHtml || "";
 
   // buttons
@@ -64,7 +80,7 @@ function render() {
     btn.textContent = b.label || "Button";
 
     btn.addEventListener("click", () => {
-      // help button opens modal
+      // Help button opens modal
       if (b.helpKey) {
         const help = HELP[b.helpKey];
         if (!help) {
@@ -72,7 +88,6 @@ function render() {
           return;
         }
 
-        // image help
         if (help.type === "image") {
           openModal(
             b.label,
@@ -84,7 +99,6 @@ function render() {
           return;
         }
 
-        // text help
         if (help.type === "text") {
           openModal(
             b.label,
@@ -136,12 +150,17 @@ async function boot() {
   if (!stepsRes.ok) throw new Error("Could not load steps.json");
   if (!helpRes.ok) throw new Error("Could not load help.json");
 
-  STEPS = await stepsRes.json();
+  const rawSteps = await stepsRes.json();
+  STEPS = normalizeStepsJson(rawSteps);
   HELP = await helpRes.json();
+
+  if (!Array.isArray(STEPS) || STEPS.length === 0) {
+    throw new Error("steps.json loaded but did not contain a steps array");
+  }
 
   // populate jump dropdown
   els.jumpSelect.innerHTML = "";
-  STEPS.forEach(s) => {
+  STEPS.forEach((s) => {
     const opt = document.createElement("option");
     opt.value = String(s.number);
     opt.textContent = `${s.number}. ${s.title}`;
@@ -172,5 +191,6 @@ els.modalBackdrop.addEventListener("click", (e) => {
 });
 
 boot().catch((err) => {
-  document.body.innerHTML = `<pre style="padding:16px;white-space:pre-wrap;">${escapeHtml(err.stack || err.message)}</pre>`;
-});// script placeholder
+  document.body.innerHTML =
+    `<pre style="padding:16px;white-space:pre-wrap;">${escapeHtml(err.stack || err.message)}</pre>`;
+});
