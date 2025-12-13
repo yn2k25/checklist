@@ -1,5 +1,21 @@
-
-window.HELP = {
-  cf_location:{title:"Where is the Consultation Form in PP?", image:"1-CF-in-PP.png"},
-  dna_location:{title:"Where to check Do Not Adopt (DNA)?", image:"2-DNA-in-PP.png"}
+window.FKR_HELP = {
+  `cf_location`: { title: `Where is the Consultation Form in PP?`, images: [`1-CF-in-PP.png`], bodyHtml: `` },
+  `dna_location`: { title: `Where to check Do Not Adopt (DNA)?`, images: [`2-DNA-in-PP.png`], bodyHtml: `` },
+  `create_person`: { title: `How to create a Person record`, images: [`3-New-Person-in-PP.png`], bodyHtml: `` },
+  `edit_contact`: { title: `How to edit the contact info`, images: [`4-Edit-Contact.png`], bodyHtml: `` },
+  `start_adoption_outcome`: { title: `How to start Adoption Outcome`, images: [`5-create-new-outcome-on-person.png`], bodyHtml: `` },
+  `fill_outcome_form`: { title: `How to fill Outcome form`, images: [`6-outcome-form-filled.png`], bodyHtml: `` },
+  `fill_outcome_multicat`: { title: `Multi-cat Outcome example`, images: [`7-multiple-cat-outcome-on-person.png`], bodyHtml: `` },
+  `create_voucher`: { title: `Where to create voucher`, images: [`8-Create-Voucher.png`], bodyHtml: `` },
+  `fill_voucher_form`: { title: `How to fill Voucher form`, images: [`9-voucher-on-cat.png`], bodyHtml: `` },
+  `create_contract`: { title: `Adoption Contract creation example`, images: [`10-create-contract-on-person-outcome.png`], bodyHtml: `` },
+  `add_adopter_memo`: { title: `Adoption Outcome Memo example`, images: [`11-Adopter-memo.png`], bodyHtml: `` },
+  `add_cat_memo`: { title: `Outcome memo on Cat`, images: [`12-memo-on-pet.png`], bodyHtml: `` },
+  `association_form`: { title: `Association form`, images: [`13-Association.png`], bodyHtml: `` },
+  `ada_upload`: { title: `ADA upload example`, images: [`14-ADA-File_upload.png`], bodyHtml: `` },
+  `cf_upload`: { title: `Consultation form upload example`, images: [`15-CF-form-upload.png`], bodyHtml: `` },
+  `receipt_create`: { title: `New receipt from person record`, images: [`16-new-receipt-on-person.png`], bodyHtml: `` },
+  `receipt_form`: { title: `Receipt form and payment panel`, images: [`17-receipt-form.png`], bodyHtml: `` },
+  `receipt_multicat`: { title: `Multi cat receipt example`, images: [`18-multi-cat-receipt-on-person.png`], bodyHtml: `` },
+  `update_calendar`: { title: `How to update Calendar`, images: [`19-edit-appointment.png`], bodyHtml: `` },
 };
