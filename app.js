@@ -3,6 +3,30 @@ let STEP_MAP = {};
 let CURRENT = null;
 let HISTORY = [];
 
+/* Help content map */
+const HELP = {
+  cf_location: {
+    title: "Where is the Consultation Form in PP?",
+    image: "1-CF-in-PP.png",
+    description: "Consultation Form location in PetPoint"
+  },
+  dna_location: {
+    title: "Where to check Do Not Adopt (DNA)?",
+    image: "2-DNA-in-PP.png",
+    description: "DNA flag in PetPoint"
+  },
+  create_person: {
+    title: "How to create a Person record",
+    image: "3-create-person.png",
+    description: "Creating a Person record in PetPoint"
+  },
+  edit_contact: {
+    title: "How to edit contact info",
+    image: "4-edit-contact.png",
+    description: "Editing adopter contact details"
+  }
+};
+
 document.addEventListener("DOMContentLoaded", init);
 
 async function init() {
@@ -15,6 +39,8 @@ async function init() {
   buildJump();
   goTo(1);
 }
+
+/* Navigation */
 
 function buildJump() {
   const sel = document.getElementById("jumpSelect");
@@ -42,6 +68,8 @@ function back() {
   render(STEP_MAP[CURRENT]);
 }
 
+/* Rendering */
+
 function render(step) {
   const c = document.getElementById("stepContainer");
 
@@ -52,12 +80,10 @@ function render(step) {
     <div class="accordion">
       ${step.checklist.map((item, i) => `
         <div class="accordion-item">
-          <button class="accordion-header" data-acc="${i}">
-            ${item.title}
-          </button>
+          <button class="accordion-header">${item.title}</button>
           <div class="accordion-body">
             <ul>
-              ${item.details?.map(d => `<li>${d}</li>`).join("") || ""}
+              ${(item.details || []).map(d => `<li>${d}</li>`).join("")}
             </ul>
             ${item.detailsHtml || ""}
           </div>
@@ -66,7 +92,7 @@ function render(step) {
     </div>
 
     <div class="actions">
-      ${step.buttons.map(b => renderButton(b)).join("")}
+      ${step.buttons.map(renderButton).join("")}
     </div>
   `;
 }
@@ -78,8 +104,13 @@ function renderButton(b) {
   if (b.back) {
     return `<button class="btn outline" data-back="1">${b.label}</button>`;
   }
+  if (b.help) {
+    return `<button class="btn outline" data-help="${b.help}">${b.label}</button>`;
+  }
   return "";
 }
+
+/* Events */
 
 document.addEventListener("click", e => {
   const acc = e.target.closest(".accordion-header");
@@ -93,7 +124,10 @@ document.addEventListener("click", e => {
 
   if (btn.dataset.next) goTo(Number(btn.dataset.next));
   if (btn.dataset.back) back();
+  if (btn.dataset.help) openHelp(btn.dataset.help);
 });
+
+/* Progress */
 
 function updateProgress(id) {
   const pct = Math.round((id / STEPS.length) * 100);
@@ -101,7 +135,33 @@ function updateProgress(id) {
   document.getElementById("stepLabel").textContent = `Step ${id}`;
 }
 
+/* Start over */
+
 document.getElementById("startOver").onclick = () => {
   HISTORY = [];
   goTo(1);
 };
+
+/* Help modal */
+
+function openHelp(key) {
+  const h = HELP[key];
+  if (!h) return;
+
+  document.getElementById("modalTitle").textContent = h.title;
+  document.getElementById("modalBody").innerHTML = `
+    <img src="${h.image}" alt="${h.description}">
+    <p>${h.description}</p>
+  `;
+
+  document.getElementById("modalBackdrop").classList.remove("hidden");
+  document.getElementById("helpModal").classList.remove("hidden");
+}
+
+function closeHelp() {
+  document.getElementById("modalBackdrop").classList.add("hidden");
+  document.getElementById("helpModal").classList.add("hidden");
+}
+
+document.getElementById("modalClose").onclick = closeHelp;
+document.getElementById("modalBackdrop").onclick = closeHelp;
