@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FKR Adoption Workflow</title>
+  <link rel="stylesheet" href="styles.css?v=1" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-title">FKR ADOPTION WORKFLOW</div>
+      <div class="topbar-subtitle">Staff checklist for adoptions and follow-up</div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="card" aria-live="polite">
+      <div class="row top-controls">
+        <button id="startOverBtn" class="btn outline" type="button">Start over</button>
+
+        <div class="jump">
+          <label for="jumpSelect" class="jump-label">Jump to step:</label>
+          <select id="jumpSelect" class="jump-select"></select>
+        </div>
+      </div>
+
+      <div class="row progress">
+        <div class="progress-label" id="progressLabel">Step</div>
+        <div class="progress-track" aria-hidden="true">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="pill" id="phasePill" hidden>
+        <span class="pill-dot"></span>
+        <span id="phasePillText">PHASE</span>
+      </div>
+
+      <h1 class="stepTitle" id="stepTitle">Loading…</h1>
+      <div class="stepMeta" id="stepMeta"></div>
+
+      <div id="accordion" class="accordion"></div>
+
+      <div id="actions" class="actions"></div>
+    </section>
+  </main>
+
+  <!-- Help modal -->
+  <div id="modalBackdrop" class="modal-backdrop" hidden></div>
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">Help</div>
+      <button id="modalClose" class="btn outline compact" type="button">Close</button>
+    </div>
+    <div id="modalBody" class="modal-body"></div>
+  </div>
+
+  <script src="app.js?v=1"></script>
+</body>
+</html>
