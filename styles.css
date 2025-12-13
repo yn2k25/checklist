@@ -1,141 +1,47 @@
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #f4f4f5;
-  color: #111;
+/* Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1000;
 }
 
-.site-header {
-  background: #9f1d1d;
-  color: white;
-  padding: 24px 16px;
-  text-align: center;
-}
-
-.app {
-  display: flex;
-  justify-content: center;
-  padding: 24px 12px 60px;
-}
-
-.card {
-  width: 100%;
-  max-width: 900px;
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: white;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,.12);
-}
-
-.top-row {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.jump select {
-  padding: 8px 10px;
-  font-size: 16px;
-}
-
-.progress {
-  margin-top: 16px;
-}
-
-.bar {
-  height: 8px;
-  background: #eee;
-  border-radius: 999px;
+  width: min(900px, 95%);
+  max-height: 85vh;
   overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
 }
 
-#barFill {
-  height: 100%;
-  width: 0%;
-  background: #1f6b34;
-  transition: width .3s ease;
-}
-
-.step-title {
-  font-size: 28px;
-  margin: 16px 0 4px;
-}
-
-.step-meta {
-  font-style: italic;
-  color: #555;
-}
-
-/* Accordion */
-.accordion {
-  margin-top: 16px;
-  border-top: 1px solid #ddd;
-}
-
-.accordion-item {
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
   border-bottom: 1px solid #ddd;
 }
 
-.accordion-header {
-  width: 100%;
-  text-align: left;
-  padding: 14px;
-  font-size: 17px;
-  font-weight: 600;
-  background: #fafafa;
-  border: none;
-  cursor: pointer;
+.modal-body {
+  padding: 16px;
+  overflow-y: auto;
 }
 
-.accordion-body {
-  padding: 12px 18px;
+.modal-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.hidden {
   display: none;
-}
-
-.accordion-body ul {
-  margin: 0;
-  padding-left: 18px;
-}
-
-.accordion-item.open .accordion-body {
-  display: block;
-}
-
-/* Buttons */
-.actions {
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.btn {
-  padding: 14px;
-  border-radius: 999px;
-  font-size: 18px;
-  cursor: pointer;
-  border: 2px solid transparent;
-}
-
-.btn.primary {
-  background: #1f6b34;
-  color: white;
-}
-
-.btn.outline {
-  background: white;
-  border-color: #ccc;
-}
-
-.btn.danger {
-  background: white;
-  border-color: #b91c1c;
-  color: #b91c1c;
-}
-
-@media (max-width: 600px) {
-  .step-title { font-size: 22px; }
 }
